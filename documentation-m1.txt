@@ -1,0 +1,30 @@
+I created a layout design for my final product that can be found here: https://www.canva.com/design/DAHGNWzMgA0/MhTkNDJKG9ueYp3jvpiO2g/view?utm_content=DAHGNWzMgA0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h985da511d2#1
+->through my Canva premium subscription, I have usage rights for all images in the design
+
+What is the intended purpose of your application?
+I am an RA, and a big part of the job is designing bulletin boards, newsletters, fliers, and door tags. Putting those together can take a lot of time and effort, and I wanted to create a project that would allow RAs to upload their different files with explanations, tags, and the intended use (and resident responses!)
+
+What work has been completed for this milestone?
+I was behind on domo (which I discussed with the professor) which means I am further behind on this milestone than I would have liked. I implemented the image upload and download feature which is a strong start for my project. Account information/login is also complete.
+
+What work is left, and how do you plan to complete it?
+I plan on implementing more options for the user to view other peoples' works and the asbility to upload multiple pdfs to the same model. After that, most of the work left is styling, and I plan on reviewing React concepts. I have a strong UI/UX plan (viewable from the link on top) which I think will add a lot of polish to the product. I also plan on sharing it with my coworkers and seeing if I can get some beta testers to try my project and find bugs for me.
+
+What does your timeline/roadmap look like to finish on time?
+I plan to work on it for an hour or so each day for the next few weeks and reevaluate if more time is needed
+
+
+
+//for later
+How are you using React?
+What components have you made?
+What components do you still plan to add?
+What data are you storing in MongoDB?
+What data do you still need to store?
+What is your profit model?
+    ○ Have you implemented it yet?
+        ■ If so, how?
+        ■ If not, what is your plan to implement it?
+Do you have a plan for going above and beyond? If so, what is it?
+If you used any borrowed code or code fragments, where did you get them from?
+What do the code fragments do? Where are they in your code?
