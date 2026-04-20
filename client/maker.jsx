@@ -44,6 +44,9 @@ const DomoForm = (props) => {
             <label htmlFor="picture">Picture (PNG): </label>
             <input id="domoPic" type="file" name="picture" accept="image/png" />
 
+            <label htmlFor="file">File (PDF): </label>
+            <input id="domoFile" type="file" name="file" accept="application/pdf" />
+
             <input className="makeDomoSubmit" type="submit" value="Make Domo" />
         </form>
     );
