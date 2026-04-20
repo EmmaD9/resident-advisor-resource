@@ -43,6 +43,7 @@ const DomoForm = (props) => {
 
             <label htmlFor="picture">Picture (PNG): </label>
             <input id="domoPic" type="file" name="picture" accept="image/png" />
+            
 
             <label htmlFor="file">File (PDF): </label>
             <input id="domoFile" type="file" name="file" accept="application/pdf" />
@@ -79,6 +80,7 @@ const DomoList = (props) => {
             : "/assets/img/domoface.jpeg";
 
         return (
+            
             <div key={domo.id} className="domo">
                 <img
                     src={imgSrc}
@@ -131,3 +133,4 @@ const init = () => {
 };
 
 window.onload = init;
+
