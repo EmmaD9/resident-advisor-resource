@@ -113,7 +113,7 @@ const DomoList = (props) => {
 };
 
 const App = () => {
-    const [reloadDomos, setReloadDomos] = useState(false);
+        const [reloadDomos, setReloadDomos] = useState(false);
 
     return (
         <div>
