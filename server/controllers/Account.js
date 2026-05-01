@@ -45,7 +45,7 @@ const signup = async (req, res) => {
 
     try {
         const hash = await Account.generateHash(pass1);
-        
+
         const accountData = {
             username,
             password: hash,
@@ -69,9 +69,24 @@ const signup = async (req, res) => {
 
 };
 
+const getAccount = (req, res) => {
+    if (!req.session.account) {
+        return res.status(401).json({ error: 'Not logged in' });
+    }
+
+    return res.json({
+        username: req.session.account.username,
+        displayName: req.session.account.displayName,
+        school: req.session.account.school,
+        createdDate: req.session.account.createdDate,
+        uploads: req.session.account.uploads,
+    });
+};
+
 module.exports = {
     loginPage,
     login,
     logout,
     signup,
+    getAccount
 };

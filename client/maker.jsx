@@ -113,15 +113,103 @@ const DomoList = (props) => {
 };
 
 const App = () => {
-        const [reloadDomos, setReloadDomos] = useState(false);
+    const [page, setPage] = useState("profile");
+    const [reloadDomos, setReloadDomos] = useState(false);
 
     return (
         <div>
-            <div id="makeDomo">
-                <DomoForm triggerReload={() => setReloadDomos(!reloadDomos)} />
-            </div>
-            <div id="domos">
-                <DomoList domos={[]} reloadDomos={reloadDomos} />
+            {page === "profile" && (
+                <Profile />
+            )}
+
+            {page === "maker" && (
+                <div>
+                    <div id="makeDomo">
+                        <DomoForm triggerReload={() => setReloadDomos(!reloadDomos)} />
+                    </div>
+                    <div id="domos">
+                        <DomoList domos={[]} reloadDomos={reloadDomos} />
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+const Profile = () => {
+    const [account, setAccount] = React.useState(null);
+
+    React.useEffect(() =>{
+        const loadAccount = async () => {
+            const response = await fetch('/getAccount');
+            const data = await response.json();
+            setAccount(data);
+        };
+
+        loadAccount();
+    }, []);
+
+    if(!account){
+        return (
+            <a href="/logout" class="button is-success is-fullwidth mt-4">
+                                            no account found
+                                        </a>
+        )
+    }
+
+    return (
+        <div>
+            <div className="columns">
+                <aside className="column is-2 menu section">
+                    <p className="menu-label">Navigation</p>
+                    <ul className="menu-list">
+                        <li><a className="is-active">Profile</a></li>
+                        <li><a >Dashboard</a></li>
+                        <li><a >Upload</a></li>
+                        <li><a >About</a></li>
+                    </ul>
+                </aside>
+
+                <main className="column section">
+                    <h1 className="title">Profile</h1>
+
+                    <section class="section">
+                        <div class="container">
+                            <div class="columns">
+                                <aside class="column is-3">
+                                    <div class="box has-text-centered">
+
+                                        
+                                        <figure class="image is-128x128 is-inline-block">
+                                            <img class="is-rounded" src="/assets/img/profile.png"/>
+                                        </figure>
+
+                                        
+                                        <h2 class="title is-4 mt-3">{account.username}</h2>
+                                        <p class="subtitle is-6">{account.school}</p>
+
+                                        <p>Member Since: {new Date(account.createdDate).toLocaleDateString()}</p>
+                                        <p>Uploads: {account.uploads}</p>
+
+                                        
+                                        <a href="/logout" class="button is-success is-fullwidth mt-4">
+                                            Log Out
+                                        </a>
+                                    </div>
+                                </aside>
+
+                                //here goes the user's content
+                                <main class="column is-9">
+                                    <div class="columns is-multiline">
+
+                                    </div>
+                                </main>
+
+                            </div>
+                        </div>
+                    </section>
+
+                </main>
             </div>
         </div>
     );
@@ -129,8 +217,7 @@ const App = () => {
 
 const init = () => {
     const root = createRoot(document.getElementById('app'));
-    root.render(<App />);
+    root.render(<Profile />);
 };
 
 window.onload = init;
-
