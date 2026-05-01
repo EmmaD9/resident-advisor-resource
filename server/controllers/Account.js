@@ -44,6 +44,8 @@ const signup = async (req, res) => {
     }
 
     try {
+        const hash = await Account.generateHash(pass1);
+        
         const accountData = {
             username,
             password: hash,

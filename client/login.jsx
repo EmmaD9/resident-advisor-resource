@@ -85,24 +85,18 @@ const SignupWindow = (props) => {
 };
 
 const init = () => {
-    const loginButton = document.getElementById('loginButton');
-    const signupButton = document.getElementById('signupButton');
+    // Attach handlers to static Bulma forms
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
 
-    const root = createRoot(document.getElementById('content'));
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
 
-    loginButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        root.render(<LoginWindow />);
-        return false;
-    });
-
-    signupButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        root.render(<SignupWindow />);
-        return false;
-    });
-
-    root.render(<LoginWindow />);
+    if (signupForm) {
+        signupForm.addEventListener('submit', handleSignup);
+    }
 };
 
+window.onload = init;
 window.onload = init;

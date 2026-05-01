@@ -5,6 +5,7 @@
   <title>The RA Resource</title>
   <link rel="shortcut icon" href="/assets/img/address-book-solid-full.svg" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="https://kit.fontawesome.com/35b0bcdf95.js" crossorigin="anonymous"></script>
 </head>
 
@@ -15,7 +16,7 @@
         <img src="assets/img/ra-resource-logo.png" alt="face logo">
       </a>
     </div>
-  
+
     <div class="navbar-menu">
       <div class="navbar-end">
         <a id="loginButton" class="navbar-item" href="/login">Login</a>
@@ -36,31 +37,35 @@
         <div class="column is-5">
           <div class="box has-text-centered">
 
+            <br>
             <!-- Avatar -->
-            <span class="icon">
-              <i class="fa-solid fa-circle-user"></i>
-            </span>
-           
+            <div class="has-text-centered mb-4">
+              <span class="icon is-large">
+                <i class="fa-solid fa-circle-user" style="font-size: 6rem;"></i>
+              </span>
+            </div>
+            <br>
+
             <h2 class="title is-4 mt-3">Profile</h2>
 
             <!-- Login Form -->
-            <form action="/login" method="POST" id="loginForm" onSubmit="return false;">
+            <form action="/login" method="POST" id="loginForm">
               <div class="field">
-                <label class="label">Email</label>
+                <label class="label">Username</label>
                 <div class="control">
                   <input class="input" id="user" type="text" name="username" placeholder="Username" required>
                 </div>
               </div>
-            
+
               <div class="field">
                 <label class="label">Password</label>
                 <div class="control">
                   <input class="input" id="pass" type="password" name="pass" placeholder="Password" required>
                 </div>
               </div>
-            
+
               <div class="field">
-                <button class="button is-success is-fullwidth">Login</button>
+                <button class="button is-success is-fullwidth" id = "loginButton">Login</button>
               </div>
             </form>
           </div>
@@ -72,44 +77,44 @@
 
             <h2 class="title is-4 has-text-centered">Sign Up</h2>
 
-            <form action="/signup" method="POST" id="signupForm" onSubmit="return false;">
+            <form action="/signup" method="POST" id="signupForm">
               <div class="field">
                 <label class="label">Username</label>
                 <div class="control">
                   <input class="input" id="user" type="text" name="username" placeholder="Username" required>
                 </div>
               </div>
-            
+
               <div class="field">
                 <label class="label">Password</label>
                 <div class="control">
                   <input class="input" id="pass" type="password" name="pass" placeholder="Password" required>
                 </div>
               </div>
-            
+
               <div class="field">
                 <label class="label">Re-Enter Password</label>
                 <div class="control">
                   <input class="input" id="pass2" type="password" name="pass2" required>
                 </div>
               </div>
-            
+
               <div class="field">
                 <label class="label">Display Name</label>
                 <div class="control">
                   <input class="input" id="displayName" type="text" name="displayName">
                 </div>
               </div>
-            
+
               <div class="field">
                 <label class="label">School (optional)</label>
                 <div class="control">
                   <input class="input" id="school" type="text" name="school">
                 </div>
               </div>
-            
+
               <div class="field">
-                <button class="button is-success is-fullwidth">Sign Up</button>
+                <button class="button is-success is-fullwidth" id = "signupButton">Sign Up</button>
               </div>
             </form>
           </div>
