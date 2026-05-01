@@ -69,6 +69,61 @@ const signup = async (req, res) => {
 
 };
 
+const changeDisplayName = async (req, res) => {
+    if (!req.session.account) {
+        return res.status(401).json({ error: 'Not logged in' });
+    }
+
+    const newName = req.body.displayName;
+
+    if(!newName){
+        return res.status(400).json({ error: 'Display name required' });
+    }
+    try {
+        const account = await AccountModel.findById(req.session.account._id);
+        account.displayName = newName;
+        await account.save();
+
+        req.session.account.displayName = newName;
+
+        return res.json({ message: 'Display name updated', displayName: newName });
+    } catch (err) {
+        return res.status(500).json({ error: 'Error updating display name' });
+    }
+};
+
+const changePassword = async (req, res) => {
+    if (!req.session.account) {
+        return res.status(401).json({ error: 'Not logged in' });
+    }
+
+    const {oldPass, newPass} = req.body;
+
+    if (!oldPass || !newPass) {
+        return res.status(400).json({ error: 'Both passwords required' });
+    }
+
+    try {
+        const account = await AccountModel.findById(req.session.account._id);
+        const match = await AccountModel.authenticate(
+            account.username,
+            oldPass
+        );
+
+        if(!match){
+            return res.status(400).json({error: 'old password incorrect'});
+        }
+
+        const hash = await AccountModel.generateHash(newPass);
+        account.password = hash;
+        await account.save();
+
+        return res.json({ message: 'Password updated!!'});
+    } catch (err) {
+        return res.status(500).json({ error: 'Error updating password' });
+    }
+};
+
 const getAccount = (req, res) => {
     if (!req.session.account) {
         return res.status(401).json({ error: 'Not logged in' });
@@ -88,5 +143,7 @@ module.exports = {
     login,
     logout,
     signup,
-    getAccount
+    getAccount,
+    changePassword,
+    changeDisplayName
 };

@@ -17,6 +17,8 @@ const router = (app) => {
 
     app.get('/getAccount', controllers.Account.getAccount);
     app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
+    app.post('/updateDisplayName', controllers.Account.changeDisplayName);
+    app.post('/updatePassword', controllers.Account.changePassword);
 };
 
 module.exports = router;

@@ -138,6 +138,8 @@ const App = () => {
 
 const Profile = () => {
     const [account, setAccount] = React.useState(null);
+    const [showNameModal, setShowNameModal] = useState(false);
+    const [showPasswordModal, setShowPasswordModal] = useState(false);
 
     React.useEffect(() =>{
         const loadAccount = async () => {
@@ -173,34 +175,50 @@ const Profile = () => {
                 <main className="column section">
                     <h1 className="title">Profile</h1>
 
-                    <section class="section">
-                        <div class="container">
-                            <div class="columns">
-                                <aside class="column is-3">
-                                    <div class="box has-text-centered">
+                    <section className="section">
+                        <div className="container">
+                            <div className="columns">
+                                <aside className="column is-3">
+                                    <div className="box has-text-centered">
 
                                         
-                                        <figure class="image is-128x128 is-inline-block">
-                                            <img class="is-rounded" src="/assets/img/profile.png"/>
+                                        <figure className="image is-128x128 is-inline-block">
+                                            <img className="is-rounded" src="/assets/img/profile.png"/>
                                         </figure>
 
                                         
-                                        <h2 class="title is-4 mt-3">{account.username}</h2>
-                                        <p class="subtitle is-6">{account.school}</p>
+                                        <h2 className="title is-4 mt-3">{account.username}</h2>
+                                        <p className="subtitle is-6">{account.school}</p>
 
                                         <p>Member Since: {new Date(account.createdDate).toLocaleDateString()}</p>
                                         <p>Uploads: {account.uploads}</p>
 
-                                        
-                                        <a href="/logout" class="button is-success is-fullwidth mt-4">
+                                        <button
+                                            className="button is-link is-fullwidth mt-3"
+                                            onClick={() => setShowNameModal(true)}
+                                        >
+                                            Change Display Name
+                                        </button>
+
+                                        <button
+                                            className="button is-danger is-fullwidth mt-2"
+                                            onClick={() => setShowPasswordModal(true)}
+                                        >
+                                            Change Password
+                                        </button>
+
+                                        <a href="/logout" className="button is-success is-fullwidth mt-4">
                                             Log Out
                                         </a>
+                                        
                                     </div>
+
+                                    
                                 </aside>
 
-                                //here goes the user's content
-                                <main class="column is-9">
-                                    <div class="columns is-multiline">
+                                <p>user's content</p>
+                                <main className="column is-9">
+                                    <div className="columns is-multiline">
 
                                     </div>
                                 </main>
@@ -211,7 +229,37 @@ const Profile = () => {
 
                 </main>
             </div>
+
+            <div className={`modal ${showNameModal ? "is-active" : ""}`}>
+                <div className="modal-background" onClick={() => setShowNameModal(false)}></div>
+
+                <div className="modal-card">
+                    <header className="modal-card-head">
+                        <p className="modal-card-title">Change Display Name</p>
+                        <button className="delete" onClick={() => setShowNameModal(false)}></button>
+                    </header>
+
+                    <section className="modal-card-body">
+                        <form onSubmit={updateName}>
+                            <input
+                                className="input"
+                                type="text"
+                                placeholder="New display name"
+                                value={newName}
+                                onChange={(e) => setNewName(e.target.value)}
+                            />
+                        </form>
+                    </section>
+
+                    <footer className="modal-card-foot">
+                        <button className="button is-link" onClick={updateName}>Save</button>
+                        <button className="button" onClick={() => setShowNameModal(false)}>Cancel</button>
+                    </footer>
+                </div>
+            </div>
         </div>
+
+        
     );
 };
 
