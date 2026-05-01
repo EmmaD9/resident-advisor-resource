@@ -22,11 +22,13 @@ const handleSignup = (e) => {
     e.preventDefault();
     helper.hideError();
 
-    const username = e.target.querySelector('#user').value;
-    const pass = e.target.querySelector('#pass').value;
-    const pass2 = e.target.querySelector('#pass2').value;
-    const displayName = e.target.querySelector('#displayName').value;
-    const school = e.target.querySelector('#school').value;
+    const formData = new FormData(e.target);
+
+    const username = formData.get('username');
+    const pass = formData.get('pass');
+    const pass2 = formData.get('pass2');
+    const displayName = formData.get('displayName');
+    const school = formData.get('school');
 
     if (!username || !pass || !pass2) {
         helper.handleError('All fields are required!');
@@ -38,65 +40,110 @@ const handleSignup = (e) => {
         return false;
     }
 
-    helper.sendPost(e.target.action, { username, pass, pass2, displayName, school });
+    helper.sendPost('/signup', { username, pass, pass2, displayName, school });
 
     return false;
 }
 
-const LoginWindow = (props) => {
+const LoginWindow = () => {
     return (
-        <form id="loginForm"
-            name="loginForm"
-            onSubmit={handleLogin}
-            action="/login"
-            method="POST"
-            className="mainForm"
-        >
-            <label htmlFor="username">Username: </label>
-            <input id="user" type="text" name="username" placeholder="username" />
-            <label htmlFor="pass">Password: </label>
-            <input id="pass" type="password" name="pass" placeholder="password" />
-            <input className="formSubmit" type="submit" value="Sign in" />
+        <form id="loginForm" onSubmit={handleLogin}>
+            <div className="field">
+                <label className="label">Username</label>
+                <div className="control">
+                    <input className="input" type="text" name="username" placeholder="Username" required />
+                </div>
+            </div>
+
+            <div className="field">
+                <label className="label">Password</label>
+                <div className="control">
+                    <input className="input" type="password" name="pass" placeholder="Password" required />
+                </div>
+            </div>
+
+            <div className="field">
+                <button className="button is-success is-fullwidth" type="submit">Login</button>
+            </div>
         </form>
     );
 };
 
-const SignupWindow = (props) => {
+const SignupWindow = () => {
     return (
-        <form id="signupForm"
-            name="signupForm"
-            onSubmit={handleSignup}
-            action="/signup"
-            method="POST"
-            className="mainForm"
-        >
-            <label htmlFor="username">Username: </label>
-            <input id="user" type="text" name="username" placeholder="username" />
+        <form id="signupForm" onSubmit={handleSignup}>
+            <div className="field">
+                <label className="label">Username</label>
+                <div className="control">
+                    <input className="input" type="text" name="username" placeholder="Username" required />
+                </div>
+            </div>
 
-            <label htmlFor="pass">Password: </label>
-            <input id="pass" type="password" name="pass" placeholder="password" />
+            <div className="field">
+                <label className="label">Password</label>
+                <div className="control">
+                    <input className="input" type="password" name="pass" placeholder="Password" required />
+                </div>
+            </div>
 
-            <label htmlFor="pass2">Password: </label>
-            <input id="pass2" type="password" name="pass2" placeholder="retype password" />
+            <div className="field">
+                <label className="label">Re-Enter Password</label>
+                <div className="control">
+                    <input className="input" type="password" name="pass2" required />
+                </div>
+            </div>
 
-            <input className="formSubmit" type="submit" value="Sign up" />
+            <div className="field">
+                <label className="label">Display Name</label>
+                <div className="control">
+                    <input className="input" type="text" name="displayName" />
+                </div>
+            </div>
+
+            <div className="field">
+                <label className="label">School (optional)</label>
+                <div className="control">
+                    <input className="input" type="text" name="school" />
+                </div>
+            </div>
+
+            <div className="field">
+                <button className="button is-success is-fullwidth" type="submit">Sign Up</button>
+            </div>
         </form>
     );
+};
+
+const showLogin = () => {
+    document.getElementById('loginRoot').style.display = 'block';
+    document.getElementById('signupRoot').style.display = 'none';
+};
+
+const showSignup = () => {
+    document.getElementById('loginRoot').style.display = 'none';
+    document.getElementById('signupRoot').style.display = 'block';
 };
 
 const init = () => {
-    // Attach handlers to static Bulma forms
-    const loginForm = document.getElementById('loginForm');
-    const signupForm = document.getElementById('signupForm');
+    const loginRoot = document.getElementById('loginRoot');
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', handleLogin);
+    if (loginRoot) {
+        createRoot(loginRoot).render(<LoginWindow />);
     }
 
-    if (signupForm) {
-        signupForm.addEventListener('submit', handleSignup);
+    const signupRoot = document.getElementById('signupRoot');
+
+    if (signupRoot) {
+        createRoot(signupRoot).render(<SignupWindow />);
     }
+
+    // Default: hide both
+    loginRoot.style.display = 'none';
+    signupRoot.style.display = 'none';
+
+    // Attach navbar buttons
+    document.getElementById('loginNav')?.addEventListener('click', showLogin);
+    document.getElementById('signupNav')?.addEventListener('click', showSignup);
 };
 
-window.onload = init;
 window.onload = init;

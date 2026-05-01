@@ -11,34 +11,21 @@
 
 <body>
   <nav class="navbar is-dark">
-    <div class="navbar-brand">
+    
       <a class="navbar-item" href="/login">
         <img src="assets/img/ra-resource-logo.png" alt="face logo">
       </a>
-    </div>
-
-    <div class="navbar-menu">
-      <div class="navbar-end">
-        <a id="loginButton" class="navbar-item" href="/login">Login</a>
-        <a id="signupButton" class="navbar-item" href="/signup">Sign Up</a>
-      </div>
+   
     </div>
   </nav>
-
-  <section id="content">
-
-  </section>
 
   <section class="section">
     <div class="container">
 
       <div class="columns is-centered">
-        <!-- Log In Column -->
-        <div class="column is-5">
+        
           <div class="box has-text-centered">
-
             <br>
-            <!-- Avatar -->
             <div class="has-text-centered mb-4">
               <span class="icon is-large">
                 <i class="fa-solid fa-circle-user" style="font-size: 6rem;"></i>
@@ -46,77 +33,15 @@
             </div>
             <br>
 
-            <h2 class="title is-4 mt-3">Profile</h2>
+            <h2 class="title is-4 mt-3">Account</h2>
+            <a id="loginNav" class="button">Login</a>
+            <a id="signupNav" class="button">Sign Up</a>
 
-            <!-- Login Form -->
-            <form action="/login" method="POST" id="loginForm">
-              <div class="field">
-                <label class="label">Username</label>
-                <div class="control">
-                  <input class="input" id="user" type="text" name="username" placeholder="Username" required>
-                </div>
-              </div>
-
-              <div class="field">
-                <label class="label">Password</label>
-                <div class="control">
-                  <input class="input" id="pass" type="password" name="pass" placeholder="Password" required>
-                </div>
-              </div>
-
-              <div class="field">
-                <button class="button is-success is-fullwidth" id = "loginButton">Login</button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <!-- Signup Column -->
-        <div class="column is-5">
-          <div class="box">
-
-            <h2 class="title is-4 has-text-centered">Sign Up</h2>
-
-            <form action="/signup" method="POST" id="signupForm">
-              <div class="field">
-                <label class="label">Username</label>
-                <div class="control">
-                  <input class="input" id="user" type="text" name="username" placeholder="Username" required>
-                </div>
-              </div>
-
-              <div class="field">
-                <label class="label">Password</label>
-                <div class="control">
-                  <input class="input" id="pass" type="password" name="pass" placeholder="Password" required>
-                </div>
-              </div>
-
-              <div class="field">
-                <label class="label">Re-Enter Password</label>
-                <div class="control">
-                  <input class="input" id="pass2" type="password" name="pass2" required>
-                </div>
-              </div>
-
-              <div class="field">
-                <label class="label">Display Name</label>
-                <div class="control">
-                  <input class="input" id="displayName" type="text" name="displayName">
-                </div>
-              </div>
-
-              <div class="field">
-                <label class="label">School (optional)</label>
-                <div class="control">
-                  <input class="input" id="school" type="text" name="school">
-                </div>
-              </div>
-
-              <div class="field">
-                <button class="button is-success is-fullwidth" id = "signupButton">Sign Up</button>
-              </div>
-            </form>
+            <!-- React Login Mount -->
+            <div id="loginRoot" style="display:none;"></div>
+          
+            <!-- React Signup Mount -->
+            <div id="signupRoot" style="display:none;"></div>
           </div>
         </div>
 
@@ -124,6 +49,7 @@
     </div>
   </section>
 
+  <script src="/assets/loginBundle.js"></script>
 </body>
 
 </html>
