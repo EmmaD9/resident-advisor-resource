@@ -2,21 +2,21 @@ const helper = require('./helper.js');
 const React = require('react');
 const { createRoot } = require('react-dom/client');
 
-const handleLogin = (e) => {
+const handleLogin = async (e) => {
     e.preventDefault();
-    helper.hideError();
 
-    const username = e.target.querySelector('#user').value;
-    const pass = e.target.querySelector('#pass').value;
+    const response = await fetch('/login', {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(e.target)),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
 
-    if (!username || !pass) {
-        helper.handleError('Username or password is empty!');
-        return false;
+    const data = await response.json();
+
+    if (data.redirect) {
+        window.location = data.redirect;
     }
-
-    helper.sendPost(e.target.action, { username, pass });
-    return false;
-}
+};
 
 const handleSignup = (e) => {
     e.preventDefault();
