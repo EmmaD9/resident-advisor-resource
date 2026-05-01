@@ -25,6 +25,8 @@ const handleSignup = (e) => {
     const username = e.target.querySelector('#user').value;
     const pass = e.target.querySelector('#pass').value;
     const pass2 = e.target.querySelector('#pass2').value;
+    const displayName = e.target.querySelector('#displayName').value;
+    const school = e.target.querySelector('#school').value;
 
     if (!username || !pass || !pass2) {
         helper.handleError('All fields are required!');
@@ -36,7 +38,7 @@ const handleSignup = (e) => {
         return false;
     }
 
-    helper.sendPost(e.target.action, { username, pass, pass2 });
+    helper.sendPost(e.target.action, { username, pass, pass2, displayName, school });
 
     return false;
 }

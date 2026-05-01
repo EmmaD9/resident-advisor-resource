@@ -9,9 +9,19 @@
 </head>
 
 <body>
-  <nav><a href="/login"><img id="logo" src="assets/img/ra-resource-logo.png" alt="face logo" /></a>
-    <div class="navlink"><a id="loginButton" href="/login">Login</a></div>
-    <div class="navlink"><a id="signupButton" href="/signup">Sign up</a></div>
+  <nav class="navbar is-dark">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/login">
+        <img src="assets/img/ra-resource-logo.png" alt="face logo">
+      </a>
+    </div>
+  
+    <div class="navbar-menu">
+      <div class="navbar-end">
+        <a id="loginButton" class="navbar-item" href="/login">Login</a>
+        <a id="signupButton" class="navbar-item" href="/signup">Sign Up</a>
+      </div>
+    </div>
   </nav>
 
   <section id="content">
@@ -27,91 +37,80 @@
           <div class="box has-text-centered">
 
             <!-- Avatar -->
-            <figure class="image is-128x128 is-inline-block">
-              <img class="is-rounded" src="/img/avatar.png" alt="Profile">
-
-            </figure>
-            <i class="fa-solid fa-circle-user"></i>
-
-            
+            <span class="icon">
+              <i class="fa-solid fa-circle-user"></i>
+            </span>
+           
             <h2 class="title is-4 mt-3">Profile</h2>
 
             <!-- Login Form -->
-            <form action="/login" method="POST">
-
+            <form action="/login" method="POST" id="loginForm" onSubmit="return false;">
               <div class="field">
                 <label class="label">Email</label>
                 <div class="control">
-                  <input class="input" type="email" name="email" required>
+                  <input class="input" id="user" type="text" name="username" placeholder="Username" required>
                 </div>
               </div>
-
+            
               <div class="field">
                 <label class="label">Password</label>
                 <div class="control">
-                  <input class="input" type="password" name="password" required>
+                  <input class="input" id="pass" type="password" name="pass" placeholder="Password" required>
                 </div>
               </div>
-
-              <div class="field">
-                <a class="button is-dark is-light is-fullwidth mb-2">Forgot your password?</a>
-              </div>
-
+            
               <div class="field">
                 <button class="button is-success is-fullwidth">Login</button>
               </div>
-
             </form>
           </div>
         </div>
 
-        <!-- SIGNUP COLUMN -->
+        <!-- Signup Column -->
         <div class="column is-5">
           <div class="box">
 
             <h2 class="title is-4 has-text-centered">Sign Up</h2>
 
-            <form action="/signup" method="POST">
-
+            <form action="/signup" method="POST" id="signupForm" onSubmit="return false;">
               <div class="field">
-                <label class="label">Email</label>
+                <label class="label">Username</label>
                 <div class="control">
-                  <input class="input" type="email" name="email" required>
+                  <input class="input" id="user" type="text" name="username" placeholder="Username" required>
                 </div>
               </div>
-
+            
               <div class="field">
                 <label class="label">Password</label>
                 <div class="control">
-                  <input class="input" type="password" name="password" required>
+                  <input class="input" id="pass" type="password" name="pass" placeholder="Password" required>
                 </div>
               </div>
-
+            
               <div class="field">
                 <label class="label">Re-Enter Password</label>
                 <div class="control">
-                  <input class="input" type="password" name="password2" required>
+                  <input class="input" id="pass2" type="password" name="pass2" required>
                 </div>
               </div>
-
+            
               <div class="field">
                 <label class="label">Display Name</label>
                 <div class="control">
-                  <input class="input" type="text" name="displayName" required>
+                  <input class="input" id="displayName" type="text" name="displayName">
                 </div>
               </div>
-
+            
               <div class="field">
                 <label class="label">School (optional)</label>
                 <div class="control">
-                  <input class="input" type="text" name="school">
+                  <input class="input" id="school" type="text" name="school">
                 </div>
               </div>
-
+            
               <div class="field">
                 <button class="button is-success is-fullwidth">Sign Up</button>
               </div>
-
             </form>
           </div>
         </div>
