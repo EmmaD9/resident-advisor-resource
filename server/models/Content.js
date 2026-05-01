@@ -44,5 +44,5 @@ ContentSchema.statics.toAPI = (doc) => ({
     picture: doc.picture?.data?.toString('base64'),
 });
 
-const ContentModel = mongoose.model('Domo', ContentSchema);
+const ContentModel = mongoose.model('Content', ContentSchema);
 module.exports = ContentModel;
