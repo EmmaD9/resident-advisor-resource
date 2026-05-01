@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <title>The RA Resource</title>
   <link rel="shortcut icon" href="/assets/img/address-book-solid-full.svg" />
-  <link rel="stylesheet" type="text/css" href="/assets/style.css" />
-  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <script src="https://kit.fontawesome.com/35b0bcdf95.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -18,12 +18,108 @@
 
   </section>
 
-  <div id="domoMessage" class='hidden'>
-    <img id="speech" src="/assets/img/speech.png" alt="speech box" />
-    <h3><span id="errorMessage"></span></h3>
-    <img id="domo" src="assets/img/domo.png" alt="domo" />
-  </div>
-  <script src="/assets/loginBundle.js"></script>
+  <section class="section">
+    <div class="container">
+
+      <div class="columns is-centered">
+        <!-- Log In Column -->
+        <div class="column is-5">
+          <div class="box has-text-centered">
+
+            <!-- Avatar -->
+            <figure class="image is-128x128 is-inline-block">
+              <img class="is-rounded" src="/img/avatar.png" alt="Profile">
+
+            </figure>
+            <i class="fa-solid fa-circle-user"></i>
+
+            
+            <h2 class="title is-4 mt-3">Profile</h2>
+
+            <!-- Login Form -->
+            <form action="/login" method="POST">
+
+              <div class="field">
+                <label class="label">Email</label>
+                <div class="control">
+                  <input class="input" type="email" name="email" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                  <input class="input" type="password" name="password" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <a class="button is-dark is-light is-fullwidth mb-2">Forgot your password?</a>
+              </div>
+
+              <div class="field">
+                <button class="button is-success is-fullwidth">Login</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <!-- SIGNUP COLUMN -->
+        <div class="column is-5">
+          <div class="box">
+
+            <h2 class="title is-4 has-text-centered">Sign Up</h2>
+
+            <form action="/signup" method="POST">
+
+              <div class="field">
+                <label class="label">Email</label>
+                <div class="control">
+                  <input class="input" type="email" name="email" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                  <input class="input" type="password" name="password" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Re-Enter Password</label>
+                <div class="control">
+                  <input class="input" type="password" name="password2" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Display Name</label>
+                <div class="control">
+                  <input class="input" type="text" name="displayName" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">School (optional)</label>
+                <div class="control">
+                  <input class="input" type="text" name="school">
+                </div>
+              </div>
+
+              <div class="field">
+                <button class="button is-success is-fullwidth">Sign Up</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
 </body>
 
 </html>
