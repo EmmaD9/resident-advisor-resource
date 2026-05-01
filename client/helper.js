@@ -3,8 +3,8 @@
    end in an error.
 */
 const handleError = (message) => {
-    document.getElementById('errorMessage').textContent = message;
-    document.getElementById('domoMessage').classList.remove('hidden');
+    //document.getElementById('errorMessage').textContent = message;
+   // document.getElementById('domoMessage').classList.remove('hidden');
 };
 
 // Rewritten send post for handling files posted
@@ -17,6 +17,11 @@ const sendPost = async (url, data, handler) => {
     if (data instanceof FormData) {
         options.body = data;
         // DO NOT set Content-Type here
+    } else if (data instanceof URLSearchParams) {
+        options.headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        };
+        options.body = data.toString();
     } else {
         // Normal JSON request
         options.headers = {
@@ -28,7 +33,7 @@ const sendPost = async (url, data, handler) => {
     const response = await fetch(url, options);
     const result = await response.json();
 
-    document.getElementById('domoMessage').classList.add('hidden');
+    //document.getElementById('domoMessage').classList.add('hidden');
 
     if (result.redirect) {
         window.location = result.redirect;
@@ -43,12 +48,7 @@ const sendPost = async (url, data, handler) => {
     }
 };
 
-const hideError = () => {
-    document.getElementById('domoMessage').classList.add('hidden');
-};
-
 module.exports = {
     handleError,
-    sendPost,
-    hideError
+    sendPost
 };

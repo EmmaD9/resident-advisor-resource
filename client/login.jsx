@@ -20,9 +20,8 @@ const handleLogin = async (e) => {
 
 const handleSignup = (e) => {
     e.preventDefault();
-    helper.hideError();
-
-    const formData = new FormData(e.target);
+    
+    const formData = new URLSearchParams(new FormData(e.target));
 
     const username = formData.get('username');
     const pass = formData.get('pass');
@@ -40,7 +39,9 @@ const handleSignup = (e) => {
         return false;
     }
 
-    helper.sendPost('/signup', { username, pass, pass2, displayName, school });
+    helper.sendPost('/signup', formData);
+
+    helper.sendPost('/signup', formData);
 
     return false;
 }
