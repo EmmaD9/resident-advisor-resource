@@ -1,67 +1,78 @@
 const models = require('../models');
-const Domo = models.Domo;
+const Content = models.Content;
+
+const makeContent = async (req, res) => {
+
+    //expects a title, description, thumbnail, and file for download
 
 
-const makerPage = (req, res) => {
-    return res.render('app');
-};
-
-const makeDomo = async (req, res) => {
-    if (!req.body.name || !req.body.age || !req.file) {
+    if (!req.body.title || !req.body.description) {
         console.log("BODY:", req.body);
         console.log("FILE:", req.file);
-        return res.status(400).json({ error: 'Bothname and age are required!' });
+        return res.status(400).json({ error: 'Title and description are required!' });
     }
 
-    const domoData = {
-        name: req.body.name,
-        age: req.body.age,
-        picture: {
-            data: req.file.buffer,
-            contentType: req.file.mimetype,
-        },
+    const thumbnailFile = req.files?.thumbnail?.[0] || null;
+    const mainFile = req.files?.file?.[0] || null;
+
+    const contentData = {
+        title: req.body.title,
+        description: req.body.description,
         owner: req.session.account._id,
+        thumbnail: thumbnailFile
+            ? {
+                data: thumbnailFile.buffer,
+                contentType: thumbnailFile.mimetype,
+            }
+            : undefined,
+        file: mainFile
+            ? {
+                data: mainFile.buffer,
+                contentType: mainFile.mimetype,
+            }
+            : undefined,
     };
 
-    try{
-        const newDomo = new Domo(domoData);
-        await newDomo.save();
-        return res.status(201).json({name: newDomo.name, age: newDomo.age});
-    } catch (err){
+    try {
+        const newContent = new Content(contentData);
+        await newContent.save();
+
+        return res.status(201).json({
+            title: newContent.title,
+            description: newContent.description,
+        });
+    } catch (err) {
         console.log(err);
-        if(err.code === 11000){
-            return res.status(400).json({ error: 'Domo already exists!' });
-        }
-        return res.status(500).json({ error: 'An error occurred making the Domo.' });
-
+        return res.status(500).json({ error: 'An error occurred creating content.' });
     }
-}
+};
 
-const getDomos = async (req, res) => {
+
+const getContent = async (req, res) => {
     try {
         const query = { owner: req.session.account._id };
+        const docs = await Content.find(query).lean().exec();
 
-        // Get full domo docs including picture
-        const docs = await Domo.find(query).lean().exec();
-
-        const domos = docs.map((doc) => ({
+        const content = docs.map((doc) => ({
             _id: doc._id,
-            name: doc.name,
-            age: doc.age,
-            picture: doc.picture?.data
-                ? doc.picture.data.toString('base64')
+            title: doc.title,
+            description: doc.description,
+            thumbnail: doc.thumbnail?.data
+                ? `data:${doc.thumbnail.contentType};base64,${doc.thumbnail.data.toString('base64')}`
+                : null,
+            file: doc.file?.data
+                ? `data:${doc.file.contentType};base64,${doc.file.data.toString('base64')}`
                 : null,
         }));
 
-        return res.json({ domos });
+        return res.json({ content });
     } catch (err) {
         console.log(err);
-        return res.status(500).json({ error: 'Error retrieving domos!' });
+        return res.status(500).json({ error: 'Error retrieving content!' });
     }
 };
     
 module.exports = {
-    makerPage,
-    makeDomo,
-    getDomos
+    makeContent,
+    getContent
 }
