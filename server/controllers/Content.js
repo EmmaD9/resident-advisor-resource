@@ -4,12 +4,12 @@ const Content = models.Content;
 const makeContent = async (req, res) => {
 
     //expects a title, description, thumbnail, and file for download
-
-
     if (!req.body.title || !req.body.description) {
-        console.log("BODY:", req.body);
-        console.log("FILE:", req.file);
         return res.status(400).json({ error: 'Title and description are required!' });
+    }
+
+    if (!req.files?.thumbnail?.[0] || !req.files?.file?.[0]) {
+        return res.status(400).json({ error: 'Thumbnail and file are required!' });
     }
 
     const thumbnailFile = req.files?.thumbnail?.[0] || null;

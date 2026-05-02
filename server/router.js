@@ -1,6 +1,6 @@
 const controllers = require('./controllers');
 const mid = require('./middleware');
-//const upload = require('./middleware/upload');
+const upload = require('./middleware/upload');
 
 const router = (app) => {
     app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
@@ -22,6 +22,15 @@ const router = (app) => {
     });
     app.post('/updateDisplayName', controllers.Account.changeDisplayName);
     app.post('/updatePassword', controllers.Account.changePassword);
+    app.post(
+        '/content',
+        mid.requiresLogin,
+        upload.fields([
+            { name: 'thumbnail', maxCount: 1 },
+            { name: 'file', maxCount: 1 },
+        ]),
+        controllers.Content.makeContent
+    );
 };
 
 module.exports = router;

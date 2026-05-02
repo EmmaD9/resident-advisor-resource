@@ -254,6 +254,30 @@ const Dashboard = ({ setPage }) => {
 };
 
 const Upload = ({ setPage }) => {
+    const [error, setError] = React.useState(null);
+    const handleUpload = async (e) => {
+        e.preventDefault();
+
+        const formData = new URLSearchParams(new FormData(e.target));
+
+        const title = formData.get('title');
+        const description = formData.get('description');
+        const thumbnail = formData.get('thumbnail');
+        const file = formData.get('file');
+
+        // Send to server
+        const result = await helper.sendPost('/content', formData);
+
+        if (result?.error) {
+            setError({ code: result.status, message: result.error });
+            return;
+        }
+
+        // Success
+        window.location.href = '/app';
+
+    }
+
     return (
         <div>
             <div className="columns">
@@ -332,6 +356,10 @@ const Upload = ({ setPage }) => {
                                     <span className="tag is-info">Tag</span>
                                     <span className="tag is-light">Tag</span>
                                 </div>
+                            </div>
+
+                            <div className="field">
+                                <button className="button is-success is-fullwidth" type="submit">Submit</button>
                             </div>
                         </div>
 

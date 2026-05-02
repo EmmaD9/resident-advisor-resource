@@ -39,9 +39,15 @@ const ContentSchema = new mongoose.Schema({
 });
 
 ContentSchema.statics.toAPI = (doc) => ({
-    name: doc.name,
-    age: doc.age,
-    picture: doc.picture?.data?.toString('base64'),
+    _id: doc._id,
+    title: doc.title,
+    description: doc.description,
+    thumbnail: doc.thumbnail?.data
+        ? doc.thumbnail.data.toString('base64')
+        : null,
+    file: doc.file?.data
+        ? doc.file.data.toString('base64')
+        : null,
 });
 
 const ContentModel = mongoose.model('Content', ContentSchema);
