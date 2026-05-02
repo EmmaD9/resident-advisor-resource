@@ -43,6 +43,10 @@ const AccountSchema = new mongoose.Schema({
     trim: true,
     match: /^[A-Za-z0-9_\-.]{1,16}$/,
   },
+  uploadCount: {
+    type: Number,
+    default: 0,
+  },
   school: {
     type: String,
     required: false,

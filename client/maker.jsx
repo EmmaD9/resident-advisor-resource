@@ -8,6 +8,7 @@ const TAG_OPTIONS = [
     { value: "bulletin", label: "Bulletin", color: "is-warning" },
     { value: "newsletter", label: "Newsletter", color: "is-info" },
     { value: "event", label: "Event", color: "is-light" },
+    { value: "other", label: "Other", color: "is-dark" },
 ];
 
 
@@ -110,9 +111,11 @@ const ContentListAll = ({ reloadContent }) => {
     }
 
     const contentNodes = contents.map((item) => {
+        
         const thumbnailSrc = item.thumbnail
             ? `data:${item.thumbnailType};base64,${item.thumbnail}`
             : "/assets/img/defaultThumbnail.png";
+        const tagInfo = TAG_OPTIONS.find(t => t.value === item.tag);
 
         return (
             <div key={item._id} className="contentCard box">
@@ -125,6 +128,12 @@ const ContentListAll = ({ reloadContent }) => {
 
                 <h3 className="title is-4 mt-3">{item.title}</h3>
                 <p className="subtitle is-6">{item.description}</p>
+
+                {tagInfo && (
+                    <span className={`tag ${tagInfo.color} mt-2`}>
+                        {tagInfo.label}
+                    </span>
+                )}
 
                 <button
                     className="button is-info mt-2"

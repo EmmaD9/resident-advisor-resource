@@ -1,5 +1,6 @@
 const models = require('../models');
 const Content = models.Content;
+const Account = models.Account;
 
 const makeContent = async (req, res) => {
 
@@ -38,6 +39,11 @@ const makeContent = async (req, res) => {
     try {
         const newContent = new Content(contentData);
         await newContent.save();
+
+        await Account.updateOne(
+            { _id: req.session.account._id },
+            { $inc: { uploadCount: 1 } }
+        );
 
         return res.status(201).json({
             title: newContent.title,
