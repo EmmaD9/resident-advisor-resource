@@ -6,7 +6,7 @@ const compression = require('compression');
 //const favicon = require('serve-favicon');
 const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
-const helmet = require('helmet');
+
 const session = require('express-session');
 
 const RedisStore = require('connect-redis').default;
@@ -36,6 +36,21 @@ redisClient.on('connect', () => {
 });
 
 const app = express();
+const helmet = require('helmet');
+//I replaced helmet with a custom CSP configuration so it would allow images from font awesome and bulma
+app.use(
+    helmet({
+        contentSecurityPolicy: {
+            directives: {
+                defaultSrc: ["'self'"],
+                scriptSrc: ["'self'", "https://kit.fontawesome.com"],
+                styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+                imgSrc: ["'self'", "data:", "https://bulma.io"],
+                fontSrc: ["'self'", "https://fonts.gstatic.com"],
+            },
+        },
+    })
+);
 
 app.use(helmet());
 app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted`)));

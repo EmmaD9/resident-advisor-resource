@@ -99,7 +99,7 @@ const Profile = () => {
 
                                         
                                         <figure className="image is-128x128 is-inline-block">
-                                            <img className="is-rounded" src="/assets/img/profile.png"/>
+                                            <img className="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
                                         </figure>
 
                                         

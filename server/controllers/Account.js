@@ -130,7 +130,7 @@ const changePassword = async (req, res) => {
     }
 };
 
-const getAccount = (req, res) => {
+const getAccount = async (req, res) => {
     if (!req.session.account) {
         return res.status(401).json({ error: 'Not logged in' });
     }
