@@ -29,10 +29,16 @@ const App = () => {
 
 const Profile = () => {
     const [account, setAccount] = React.useState(null);
-    const [showNameModal, setShowNameModal] = useState(false);
-    const [showPasswordModal, setShowPasswordModal] = useState(false);
-
+    
+    //changing username
     const [newName, setNewName] = React.useState("");
+    const [showNameModal, setShowNameModal] = React.useState(false);
+
+    //changing password
+    const [oldPass, setOldPass] = React.useState("");
+    const [newPass, setNewPass] = React.useState("");
+    const [showPasswordModal, setShowPasswordModal] = React.useState(false);
+
 
     React.useEffect(() =>{
         const loadAccount = async () => {
@@ -73,6 +79,28 @@ const Profile = () => {
 
         // Close modal
         setShowNameModal(false);
+    };
+
+    const changePassword = async (e) => {
+        e.preventDefault();
+
+        const response = await fetch('/updatePassword', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ oldPass, newPass }),
+        });
+
+        const result = await response.json();
+
+        if (result.error) {
+            console.error(result.error);
+            return;
+        }
+
+        setOldPass("");
+        setNewPass("");
+
+        setShowPasswordModal(false);
     };
 
     return (
@@ -170,6 +198,42 @@ const Profile = () => {
                     <footer className="modal-card-foot">
                         <button className="button is-link" onClick={updateName}>Save</button>
                         <button className="button" onClick={() => setShowNameModal(false)}>Cancel</button>
+                    </footer>
+                </div>
+            </div>
+
+            <div className={`modal ${showPasswordModal ? "is-active" : ""}`}>
+                <div className="modal-background" onClick={() => setShowPasswordModal(false)}></div>
+
+                <div className="modal-card">
+                    <header className="modal-card-head">
+                        <p className="modal-card-title">Change Password</p>
+                        <button className="delete" onClick={() => setShowPasswordModal(false)}></button>
+                    </header>
+
+                    <section className="modal-card-body">
+                        <form onSubmit={changePassword}>
+                            <input
+                                className="input mb-3"
+                                type="password"
+                                placeholder="Current password"
+                                value={oldPass}
+                                onChange={(e) => setOldPass(e.target.value)}
+                            />
+
+                            <input
+                                className="input"
+                                type="password"
+                                placeholder="New password"
+                                value={newPass}
+                                onChange={(e) => setNewPass(e.target.value)}
+                            />
+                        </form>
+                    </section>
+
+                    <footer className="modal-card-foot">
+                        <button className="button is-link" onClick={changePassword}>Save</button>
+                        <button className="button" onClick={() => setShowPasswordModal(false)}>Cancel</button>
                     </footer>
                 </div>
             </div>
