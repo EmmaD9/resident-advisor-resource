@@ -78,7 +78,7 @@ const ContentList = ({ reloadContent }) => {
     return <div className="contentList columns is-multiline">{contentNodes}</div>;
 };
 
-const Profile = ({ setPage }) => {
+const Profile = ({ setPage, reloadContent }) => {
     const [account, setAccount] = React.useState(null);
 
     //changing username
@@ -215,7 +215,7 @@ const Profile = ({ setPage }) => {
 
                                 <main className="column is-9">
                                     <div className="columns is-multiline">
-                                        <p>user's content</p>
+                                        <ContentList content={[]} reloadContent={reloadContent} />
                                     </div>
                                 </main>
 
@@ -310,7 +310,6 @@ const Dashboard = ({ setPage, reloadContent }) => {
                 </aside>
             </div>
 
-            <ContentList content={[]} reloadContent={reloadContent} />
         </div>
     );
 };
