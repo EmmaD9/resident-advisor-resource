@@ -3,6 +3,14 @@ const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
+const TAG_OPTIONS = [
+    { value: "doordec", label: "Door Dec", color: "is-primary" },
+    { value: "bulletin", label: "Bulletin", color: "is-warning" },
+    { value: "newsletter", label: "Newsletter", color: "is-info" },
+    { value: "event", label: "Event", color: "is-light" },
+];
+
+
 const App = () => {
     const [page, setPage] = useState("profile");
     const [reloadContent, setReloadContent] = useState(false);
@@ -380,6 +388,8 @@ const Dashboard = ({ setPage, reloadContent }) => {
 
 const Upload = ({ setPage }) => {
     const [error, setError] = React.useState(null);
+    const [tag, setTag] = useState("");
+
     const handleUpload = async (e) => {
         e.preventDefault();
 
@@ -495,15 +505,35 @@ const Upload = ({ setPage }) => {
                                     </div>
                                 </div>
 
-                                <div className="column">
-                                    <label className="label">Tags</label>
+                                <div
+                                    className="column"
+                                    style={{
+                                        position: "relative",
+                                        zIndex: 10,
+                                        background: "white"
+                                    }}
+                                >
+                                    <label className="label">Tag</label>
+
                                     <div className="tags">
-                                        <span className="tag is-primary">Tag</span>
-                                        <span className="tag is-warning">Tag</span>
-                                        <span className="tag is-info">Tag</span>
-                                        <span className="tag is-light">Tag</span>
+                                        {TAG_OPTIONS.map((t) => (
+                                            <span
+                                                key={t.value}
+                                                className={`tag ${t.color} ${tag === t.value ? "is-selected" : ""}`}
+                                                style={{ cursor: "pointer" }}
+                                                onClick={() => {
+                                                    console.log("tag clicked");
+                                                    setTag(t.value);
+                                                }}
+                                            >
+                                                {t.label}
+                                            </span>
+                                        ))}
                                     </div>
+
+                                    <p>Selected tag: {tag || "none"}</p>
                                 </div>
+
 
                                 <div className="column">
                                     <button className="button is-success is-fullwidth" type="submit">

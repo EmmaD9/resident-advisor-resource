@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const _ = require('underscore');
 
+
 const setName = (name) => _.escape(name).trim();
 
 const ContentSchema = new mongoose.Schema({
@@ -36,12 +37,20 @@ const ContentSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    tag: {
+        type: String,
+        enum: {
+            values: ['doordec', 'bulletin', 'newsletter', 'event', 'other'],
+            message: '{VALUE} is not a valid tag'
+        }
+    }
 });
 
 ContentSchema.statics.toAPI = (doc) => ({
     _id: doc._id,
     title: doc.title,
     description: doc.description,
+    tag: doc.tag,
     thumbnail: doc.thumbnail?.data
         ? doc.thumbnail.data.toString('base64')
         : null,
