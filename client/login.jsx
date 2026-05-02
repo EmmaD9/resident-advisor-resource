@@ -21,7 +21,7 @@ const LoginWindow = () => {
     };
 
     return (
-        <div className="box">
+        <div className="box has-background-info-light">
 
             {error && (
                 <div className="notification is-danger">
@@ -50,7 +50,7 @@ const LoginWindow = () => {
                 </div>
 
                 <div className="field">
-                    <button className="button is-success is-fullwidth" type="submit">Login</button>
+                    <button className="button has-background-success-dark has-text-warning is-fullwidth" type="submit">Login</button>
                 </div>
             </form>
         </div>
@@ -93,7 +93,7 @@ const SignupWindow = () => {
 
     }
     return (
-        <div className="box">
+        <div className="box has-background-info-light">
 
             {error && (
                 <div className="notification is-danger">
@@ -138,7 +138,7 @@ const SignupWindow = () => {
                 </div>
 
                 <div className="field">
-                    <button className="button is-success is-fullwidth" type="submit">Sign Up</button>
+                    <button className="button has-background-success-dark has-text-warning is-fullwidth" type="submit">Sign Up</button>
                 </div>
             </form>
         </div>
