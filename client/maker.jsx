@@ -152,10 +152,10 @@ const Profile = ({ setPage }) => {
 
                                 </aside>
 
-                                <p>user's content</p>
+
                                 <main className="column is-9">
                                     <div className="columns is-multiline">
-
+                                        <p>user's content</p>
                                     </div>
                                 </main>
 
@@ -258,25 +258,20 @@ const Upload = ({ setPage }) => {
     const handleUpload = async (e) => {
         e.preventDefault();
 
-        const formData = new URLSearchParams(new FormData(e.target));
+        const formData = new FormData(e.target);
 
-        const title = formData.get('title');
-        const description = formData.get('description');
-        const thumbnail = formData.get('thumbnail');
-        const file = formData.get('file');
-
-        // Send to server
-        const result = await helper.sendPost('/content', formData);
+        const result = await fetch('/content', {
+            method: 'POST',
+            body: formData,
+        }).then(res => res.json());
 
         if (result?.error) {
             setError({ code: result.status, message: result.error });
             return;
         }
 
-        // Success
         window.location.href = '/app';
-
-    }
+    };
 
     return (
         <div>
@@ -296,72 +291,103 @@ const Upload = ({ setPage }) => {
                 <main className="column section">
                     <div className="container">
 
-                        {/* title header */}
-                        <div className="card p-5">
-                            <h1 className="title has-text-centered">Upload a File</h1>
-                        </div>
+                        <form onSubmit={handleUpload}>
 
-                        {/* thumbnail, title, description */}
-                        <div className="columns is-variable is-6 mt-5">
-
-                            {/* thumbnail */}
-                            <div className="column is-one-third">
-                                <div className="box has-text-centered" style={{ height: "220px" }}>
-                                    <span className="icon is-large">
-                                        <i className="fas fa-image fa-3x"></i>
-                                    </span>
-                                    <p className="mt-3">Add a thumbnail!</p>
-                                </div>
+                            {/* title header */}
+                            <div className="card p-5">
+                                <h1 className="title has-text-centered">Upload a File</h1>
                             </div>
 
-                            {/* title and description */}
-                            <div className="column">
-                                <div className="field">
-                                    <label className="label">Title</label>
-                                    <div className="control">
-                                        <input className="input" type="text" placeholder="Enter a title" />
-                                    </div>
-                                </div>
+                            {/* thumbnail, title, description */}
+                            <div className="columns is-variable is-6 mt-5">
 
-                                <div className="field mt-4">
-                                    <label className="label">Description</label>
-                                    <div className="control">
-                                        <textarea className="textarea" placeholder="Write a description"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* bottom row */}
-                        <div className="columns is-vcentered mt-5">
-                            <div className="column is-one-third">
-                                <div className="file has-name is-info">
-                                    <label className="file-label">
-                                        <input className="file-input" type="file" />
-                                        <span className="file-cta">
-                                            <span className="file-icon">
-                                                <i className="fas fa-cloud-upload-alt"></i>
-                                            </span>
-                                            <span className="file-label">Select a File</span>
+                                {/* thumbnail */}
+                                <div className="column is-one-third">
+                                    <div className="box has-text-centered" style={{ height: "220px" }}>
+                                        <span className="icon is-large">
+                                            <i className="fas fa-image fa-3x"></i>
                                         </span>
-                                    </label>
+                                        <p className="mt-3">Add a thumbnail!</p>
+
+                                        <input
+                                            className="file-input mt-3"
+                                            type="file"
+                                            name="thumbnail"
+                                            accept="image/png"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* title and description */}
+                                <div className="column">
+                                    <div className="field">
+                                        <label className="label">Title</label>
+                                        <div className="control">
+                                            <input
+                                                className="input"
+                                                type="text"
+                                                name="title"
+                                                placeholder="Enter a title"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="field mt-4">
+                                        <label className="label">Description</label>
+                                        <div className="control">
+                                            <textarea
+                                                className="textarea"
+                                                name="description"
+                                                placeholder="Write a description"
+                                                required
+                                            ></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="column">
-                                <label className="label">Tags</label>
-                                <div className="tags">
-                                    <span className="tag is-primary">Tag</span>
-                                    <span className="tag is-warning">Tag</span>
-                                    <span className="tag is-info">Tag</span>
-                                    <span className="tag is-light">Tag</span>
+                            {/* bottom row */}
+                            <div className="columns is-vcentered mt-5">
+                                <div className="column is-one-third">
+                                    <div className="file has-name is-info">
+                                        <label className="file-label">
+                                            <input
+                                                className="file-input"
+                                                type="file"
+                                                name="file"
+                                                accept="image/png,application/pdf"
+                                                required
+                                            />
+                                            <span className="file-cta">
+                                                <span className="file-icon">
+                                                    <i className="fas fa-cloud-upload-alt"></i>
+                                                </span>
+                                                <span className="file-label">Select a File</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div className="column">
+                                    <label className="label">Tags</label>
+                                    <div className="tags">
+                                        <span className="tag is-primary">Tag</span>
+                                        <span className="tag is-warning">Tag</span>
+                                        <span className="tag is-info">Tag</span>
+                                        <span className="tag is-light">Tag</span>
+                                    </div>
+                                </div>
+
+                                <div className="column">
+                                    <button className="button is-success is-fullwidth" type="submit">
+                                        Submit
+                                    </button>
                                 </div>
                             </div>
 
-                            <div className="field">
-                                <button className="button is-success is-fullwidth" type="submit">Submit</button>
-                            </div>
-                        </div>
+                        </form>
 
                     </div>
                 </main>
@@ -369,6 +395,7 @@ const Upload = ({ setPage }) => {
         </div>
     );
 };
+
 
 const About = ({ setPage }) => {
     return (
