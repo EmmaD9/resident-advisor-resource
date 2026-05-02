@@ -14,7 +14,12 @@ const router = (app) => {
     //app.post('/maker', mid.requiresLogin, upload.single('picture'), controllers.Domo.makeDomo);
 
     app.get('/getAccount', controllers.Account.getAccount);
-    app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
+    app.get('/', (req, res) => {
+        if (req.session.account) {
+            return res.redirect('/app');
+        }
+        return res.render('login');
+    });
     app.post('/updateDisplayName', controllers.Account.changeDisplayName);
     app.post('/updatePassword', controllers.Account.changePassword);
 };
