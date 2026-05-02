@@ -138,6 +138,7 @@ const ContentListAll = ({ reloadContent }) => {
                 />
 
                 <h3 className="title is-4 mt-3">{item.title}</h3>
+                <h3 className="title is-5 mt-3">Author: {item.owner}</h3>
                 <p className="subtitle is-6">{item.description}</p>
 
                 {tagInfo && (
@@ -247,6 +248,10 @@ const Profile = ({ setPage, reloadContent }) => {
         <div>
             <div className="columns">
                 <aside className="column is-2 menu section">
+                    <figure className="image is-16by9">
+                        <img src="/assets/img/ra-resource-logo.png" alt="RA Resource Logo" />
+                        </figure>
+
                     <p className="menu-label">Navigation</p>
                     <ul className="menu-list">
                         <li><a onClick={() => setPage("profile")} className="is-active">Profile</a></li>
@@ -412,6 +417,9 @@ const Dashboard = ({ setPage, reloadContent }) => {
         <div>
             <div className="columns">
                 <aside className="column is-2 menu section">
+                    <figure className="image is-16by9">
+                        <img src="/assets/img/ra-resource-logo.png" alt="RA Resource Logo" />
+                        </figure>
                     <p className="menu-label">Navigation</p>
                     <ul className="menu-list">
                         <li><a onClick={() => setPage("profile")}>Profile</a></li>
@@ -476,6 +484,9 @@ const Upload = ({ setPage }) => {
             <div className="columns">
                 {/* Sidebar */}
                 <aside className="column is-2 menu section">
+                    <figure className="image is-16by9">
+                        <img src="/assets/img/ra-resource-logo.png" alt="RA Resource Logo" />
+                        </figure>
                     <p className="menu-label">Navigation</p>
                     <ul className="menu-list">
                         <li><a onClick={() => setPage("profile")}>Profile</a></li>
@@ -619,6 +630,9 @@ const About = ({ setPage }) => {
         <div>
             <div className="columns">
                 <aside className="column is-2 menu section">
+                    <figure className="image is-16by9">
+                        <img src="/assets/img/ra-resource-logo.png" alt="RA Resource Logo" />
+                        </figure>
                     <p className="menu-label">Navigation</p>
                     <ul className="menu-list">
                         <li><a onClick={() => setPage("profile")}>Profile</a></li>
@@ -627,6 +641,8 @@ const About = ({ setPage }) => {
                         <li><a onClick={() => setPage("about")} className="is-active">About</a></li>
                     </ul>
                 </aside>
+
+                
             </div>
         </div>
     );

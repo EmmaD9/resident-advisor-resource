@@ -55,6 +55,8 @@ ContentSchema.statics.toAPI = (doc) => ({
     file: doc.file?.data
         ? doc.file.data.toString('base64')
         : null,
+    owner: doc.owner?.displayName || doc.owner?.username || "Unknown",
+    
 });
 
 const ContentModel = mongoose.model('Content', ContentSchema);
