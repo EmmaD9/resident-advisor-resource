@@ -5,31 +5,22 @@ const { createRoot } = require('react-dom/client');
 
 const App = () => {
     const [page, setPage] = useState("profile");
-    const [reloadDomos, setReloadDomos] = useState(false);
+    // const [reloadDomos, setReloadDomos] = useState(false);
 
     return (
         <div>
-            {page === "profile" && (
-                <Profile />
-            )}
-
-            {page === "maker" && (
-                <div>
-                    <div id="makeDomo">
-                        <DomoForm triggerReload={() => setReloadDomos(!reloadDomos)} />
-                    </div>
-                    <div id="domos">
-                        <DomoList domos={[]} reloadDomos={reloadDomos} />
-                    </div>
-                </div>
-            )}
+            {page === "profile" && <Profile setPage={setPage} />}
+            {page === "dashboard" && <Dashboard setPage={setPage} />}
+            {page === "upload" && <Upload setPage={setPage} />}
+            {page === "about" && <About setPage={setPage} />}
         </div>
+
     );
 };
 
-const Profile = () => {
+const Profile = ({setPage}) => {
     const [account, setAccount] = React.useState(null);
-    
+
     //changing username
     const [newName, setNewName] = React.useState("");
     const [showNameModal, setShowNameModal] = React.useState(false);
@@ -40,7 +31,7 @@ const Profile = () => {
     const [showPasswordModal, setShowPasswordModal] = React.useState(false);
 
 
-    React.useEffect(() =>{
+    React.useEffect(() => {
         const loadAccount = async () => {
             const response = await fetch('/getAccount');
             const data = await response.json();
@@ -50,11 +41,11 @@ const Profile = () => {
         loadAccount();
     }, []);
 
-    if(!account){
+    if (!account) {
         return (
             <a href="/logout" class="button is-success is-fullwidth mt-4">
-                                            no account found
-                                        </a>
+                no account found
+            </a>
         )
     }
 
@@ -101,6 +92,7 @@ const Profile = () => {
         setNewPass("");
 
         setShowPasswordModal(false);
+        console.log("Profile loaded with setPage:", setPage);
     };
 
     return (
@@ -109,10 +101,10 @@ const Profile = () => {
                 <aside className="column is-2 menu section">
                     <p className="menu-label">Navigation</p>
                     <ul className="menu-list">
-                        <li><a className="is-active">Profile</a></li>
-                        <li><a >Dashboard</a></li>
-                        <li><a >Upload</a></li>
-                        <li><a >About</a></li>
+                        <li><a onClick={() => setPage("profile")} className="is-active">Profile</a></li>
+                        <li><a onClick={() => setPage("dashboard")}>Dashboard</a></li>
+                        <li><a onClick={() => setPage("upload")}>Upload</a></li>
+                        <li><a onClick={() => setPage("about")}>About</a></li>
                     </ul>
                 </aside>
 
@@ -125,12 +117,12 @@ const Profile = () => {
                                 <aside className="column is-3">
                                     <div className="box has-text-centered">
 
-                                        
+
                                         <figure className="image is-128x128 is-inline-block">
                                             <img className="is-rounded" src="assets/img/address-book-solid-full.svg" />
                                         </figure>
 
-                                        
+
                                         <h2 className="title is-4 mt-3">{account.displayName}</h2>
                                         <p className="subtitle is-6">{account.school}</p>
 
@@ -154,10 +146,10 @@ const Profile = () => {
                                         <a href="/logout" className="button is-success is-fullwidth mt-4">
                                             Log Out
                                         </a>
-                                        
+
                                     </div>
 
-                                    
+
                                 </aside>
 
                                 <p>user's content</p>
@@ -239,13 +231,67 @@ const Profile = () => {
             </div>
         </div>
 
-        
+
+    );
+};
+
+const Dashboard = ({ setPage }) => {
+    return (
+        <div>
+            <div className="columns">
+                <aside className="column is-2 menu section">
+                    <p className="menu-label">Navigation</p>
+                    <ul className="menu-list">
+                        <li><a onClick={() => setPage("profile")}>Profile</a></li>
+                        <li><a onClick={() => setPage("dashboard")} className="is-active">Dashboard</a></li>
+                        <li><a onClick={() => setPage("upload")}>Upload</a></li>
+                        <li><a onClick={() => setPage("about")}>About</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+    );
+};
+
+const Upload = ({ setPage }) => {
+    return (
+        <div>
+            <div className="columns">
+                <aside className="column is-2 menu section">
+                    <p className="menu-label">Navigation</p>
+                    <ul className="menu-list">
+                        <li><a onClick={() => setPage("profile")}>Profile</a></li>
+                        <li><a onClick={() => setPage("dashboard")} >Dashboard</a></li>
+                        <li><a onClick={() => setPage("upload")}className="is-active">Upload</a></li>
+                        <li><a onClick={() => setPage("about")}>About</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+    );
+};
+
+const About = ({ setPage }) => {
+    return (
+        <div>
+            <div className="columns">
+                <aside className="column is-2 menu section">
+                    <p className="menu-label">Navigation</p>
+                    <ul className="menu-list">
+                        <li><a onClick={() => setPage("profile")}>Profile</a></li>
+                        <li><a onClick={() => setPage("dashboard")} >Dashboard</a></li>
+                        <li><a onClick={() => setPage("upload")}>Upload</a></li>
+                        <li><a onClick={() => setPage("about")}className="is-active">About</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
     );
 };
 
 const init = () => {
     const root = createRoot(document.getElementById('app'));
-    root.render(<Profile />);
+    root.render(<App />);
 };
 
 window.onload = init;
