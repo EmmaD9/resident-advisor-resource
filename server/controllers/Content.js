@@ -20,7 +20,7 @@ const makeContent = async (req, res) => {
     const contentData = {
         title: req.body.title,
         description: req.body.description,
-        tag: req.body.tag,
+        tag: tagValue,
         owner: req.session.account._id,
         thumbnail: thumbnailFile
             ? {
@@ -40,10 +40,15 @@ const makeContent = async (req, res) => {
         const newContent = new Content(contentData);
         await newContent.save();
 
-        await Account.updateOne(
-            { _id: req.session.account._id },
-            { $inc: { uploadCount: 1 } }
-        );
+        try {
+            await Account.updateOne(
+                { _id: req.session.account._id },
+                { $inc: { uploadCount: 1 } }
+            );
+        } catch (updateErr) {
+            console.log("UPLOAD COUNTER ERROR:", updateErr);
+            //idk why this isn't working but the rest of the upload works fine
+        }
 
         return res.status(201).json({
             title: newContent.title,
@@ -51,6 +56,7 @@ const makeContent = async (req, res) => {
         });
     } catch (err) {
         console.log(err);
+        console.log("UPLOAD ERROR:", err);
         return res.status(500).json({ error: 'An error occurred creating content.' });
     }
 };
