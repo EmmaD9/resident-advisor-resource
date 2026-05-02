@@ -1,15 +1,3 @@
-/* Takes in an error message. Sets the error message up in html, and
-   displays it to the user. Will be hidden by other events that could
-   end in an error.
-// */
-// const handleError = (message) => {
-//     document.getElementById('errorMessage').textContent = message;
-// };
-
-// const removeError = (message) => {
-//     document.getElementById('errorMessage').textContent = '';
-// };
-
 // Rewritten send post for handling files posted
 const sendPost = async (url, data, handler) => {
     let options = {
@@ -45,13 +33,6 @@ const sendPost = async (url, data, handler) => {
         window.location = result.redirect;
     }
 
-    if (result.error) {
-        handleError(result.error);
-    }
-
-    if (handler) {
-        handler(result);
-    }
 };
 
 module.exports = {

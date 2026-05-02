@@ -32,7 +32,6 @@ const login = (req, res) => {
 };
 
 const signup = async (req, res) => {
-    const [error, setError] = React.useState(null);
 
     const username = req.body.username;
     const pass1 = req.body.pass;
@@ -41,14 +40,14 @@ const signup = async (req, res) => {
     const displayName = req.body.displayName;
     const school = req.body.school;    
 
-    if (pass1 !== pass2) {
-        return res.status(400).json({ error: 'Passwords do not match!' });
-    }
-    
     if (!username || !pass1 || !pass2) {
         return res.status(400).json({ error: 'All fields are required!' });
     }
 
+    if (pass1 !== pass2) {
+        return res.status(400).json({ error: 'Passwords do not match!' });
+    }
+    
     try {
         const hash = await Account.generateHash(pass1);
 

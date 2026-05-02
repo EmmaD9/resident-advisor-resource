@@ -2,32 +2,6 @@ const helper = require('./helper.js');
 const React = require('react');
 const { createRoot } = require('react-dom/client');
 
-const handleSignup = (e) => {
-    e.preventDefault();
-
-    const formData = new URLSearchParams(new FormData(e.target));
-
-    const username = formData.get('username');
-    const pass = formData.get('pass');
-    const pass2 = formData.get('pass2');
-    const displayName = formData.get('displayName');
-    const school = formData.get('school');
-
-    if (!username || !pass || !pass2) {
-        helper.handleError('All fields are required!');
-        return false;
-    }
-
-    if (pass !== pass2) {
-        helper.handleError('Passwords do not match!');
-        return false;
-    }
-
-    helper.sendPost('/signup', formData);
-
-    return false;
-}
-
 const LoginWindow = () => {
     const [error, setError] = React.useState(null);
     const [username, setUsername] = React.useState("");
@@ -71,7 +45,7 @@ const LoginWindow = () => {
                     <div className="control">
                         <input className="input" type="password" name="pass" placeholder="Password" value={pass}
                             onChange={(e) => setPass(e.target.value)}
- required />
+                            required />
                     </div>
                 </div>
 
@@ -84,47 +58,90 @@ const LoginWindow = () => {
 };
 
 const SignupWindow = () => {
+    const [error, setError] = React.useState(null);
+    const handleSignup = async (e) => {
+        e.preventDefault();
+
+        const formData = new URLSearchParams(new FormData(e.target));
+
+        const username = formData.get('username');
+        const pass = formData.get('pass');
+        const pass2 = formData.get('pass2');
+        const displayName = formData.get('displayName');
+        const school = formData.get('school');
+
+        if (!username || !pass || !pass2) {
+            setError({ code: 400, message: 'All fields are required!' });
+            return false;
+        }
+
+        if (pass !== pass2) {
+            setError({ code: 400, message: 'Passwords do not match!' });
+            return false;
+        }
+
+        // Send to server
+        const result = await helper.sendPost('/signup', formData);
+
+        if (result?.error) {
+            setError({ code: result.status, message: result.error });
+            return;
+        }
+
+        // Success
+        window.location.href = '/app';
+
+    }
     return (
-        <form id="signupForm" onSubmit={handleSignup}>
-            <div className="field">
-                <label className="label">Username</label>
-                <div className="control">
-                    <input className="input" type="text" name="username" placeholder="Username" required />
-                </div>
-            </div>
+        <div className="box">
 
-            <div className="field">
-                <label className="label">Password</label>
-                <div className="control">
-                    <input className="input" type="password" name="pass" placeholder="Password" required />
+            {error && (
+                <div className="notification is-danger">
+                    <button className="delete" onClick={() => setError(null)}></button>
+                    <strong>Error {error.code}:</strong> {error.message}
                 </div>
-            </div>
-
-            <div className="field">
-                <label className="label">Re-Enter Password</label>
-                <div className="control">
-                    <input className="input" type="password" name="pass2" required />
+            )}
+            <form id="signupForm" onSubmit={handleSignup}>
+                <div className="field">
+                    <label className="label">Username</label>
+                    <div className="control">
+                        <input className="input" type="text" name="username" placeholder="Username" required />
+                    </div>
                 </div>
-            </div>
 
-            <div className="field">
-                <label className="label">Display Name</label>
-                <div className="control">
-                    <input className="input" type="text" name="displayName" />
+                <div className="field">
+                    <label className="label">Password</label>
+                    <div className="control">
+                        <input className="input" type="password" name="pass" placeholder="Password" required />
+                    </div>
                 </div>
-            </div>
 
-            <div className="field">
-                <label className="label">School (optional)</label>
-                <div className="control">
-                    <input className="input" type="text" name="school" />
+                <div className="field">
+                    <label className="label">Re-Enter Password</label>
+                    <div className="control">
+                        <input className="input" type="password" name="pass2" required />
+                    </div>
                 </div>
-            </div>
 
-            <div className="field">
-                <button className="button is-success is-fullwidth" type="submit">Sign Up</button>
-            </div>
-        </form>
+                <div className="field">
+                    <label className="label">Display Name</label>
+                    <div className="control">
+                        <input className="input" type="text" name="displayName" />
+                    </div>
+                </div>
+
+                <div className="field">
+                    <label className="label">School (optional)</label>
+                    <div className="control">
+                        <input className="input" type="text" name="school" />
+                    </div>
+                </div>
+
+                <div className="field">
+                    <button className="button is-success is-fullwidth" type="submit">Sign Up</button>
+                </div>
+            </form>
+        </div>
     );
 };
 
