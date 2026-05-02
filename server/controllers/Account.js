@@ -92,6 +92,7 @@ const changeDisplayName = async (req, res) => {
 
         return res.json({ message: 'Display name updated', displayName: newName });
     } catch (err) {
+        console.error("Display name update failed:", err);
         return res.status(500).json({ error: 'Error updating display name' });
     }
 };
@@ -126,6 +127,7 @@ const changePassword = async (req, res) => {
 
         return res.json({ message: 'Password updated!!'});
     } catch (err) {
+        console.error("Password update failed:", err);
         return res.status(500).json({ error: 'Error updating password' });
     }
 };
