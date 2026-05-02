@@ -127,11 +127,11 @@ const Profile = () => {
 
                                         
                                         <figure className="image is-128x128 is-inline-block">
-                                            <img className="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
+                                            <img className="is-rounded" src="assets/img/address-book-solid-full.svg" />
                                         </figure>
 
                                         
-                                        <h2 className="title is-4 mt-3">{account.username}</h2>
+                                        <h2 className="title is-4 mt-3">{account.displayName}</h2>
                                         <p className="subtitle is-6">{account.school}</p>
 
                                         <p>Member Since: {new Date(account.createdDate).toLocaleDateString()}</p>
