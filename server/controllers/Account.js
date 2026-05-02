@@ -5,6 +5,10 @@ const loginPage = (req, res) => {
     return res.render('login');
 };
 
+const appPage = (req, res) => {
+    return res.render('app');
+};
+
 const logout = (req, res) => {
     req.session.destroy();
     return res.redirect('/');
@@ -23,7 +27,7 @@ const login = (req, res) => {
             return res.status(401).json({ error: 'Wrong username or password!' });
         }
         req.session.account = Account.toAPI(account);
-        return res.json({ redirect: '/maker' });
+        return res.json({ redirect: '/app' });
     });
 };
 
@@ -58,7 +62,7 @@ const signup = async (req, res) => {
         await newAccount.save();
 
         req.session.account = Account.toAPI(newAccount);
-        return res.json({ redirect: '/maker' });
+        return res.json({ redirect: '/app' });
     } catch (err) {
         console.log(err);
         if (err.code === 11000) {
@@ -145,5 +149,6 @@ module.exports = {
     signup,
     getAccount,
     changePassword,
-    changeDisplayName
+    changeDisplayName,
+    appPage
 };

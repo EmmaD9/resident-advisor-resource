@@ -3,8 +3,6 @@ const mid = require('./middleware');
 const upload = require('./middleware/upload');
 
 const router = (app) => {
-    app.get('/getDomos', mid.requiresLogin, controllers.Domo.getDomos);
-
     app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
     app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);
 
@@ -12,8 +10,8 @@ const router = (app) => {
 
     app.get('/logout', mid.requiresLogin, controllers.Account.logout);
 
-    app.get('/maker', mid.requiresLogin, controllers.Domo.makerPage);
-    app.post('/maker', mid.requiresLogin, upload.single('picture'), controllers.Domo.makeDomo);
+    app.get('/app', mid.requiresLogin, controllers.Account.appPage);
+    //app.post('/maker', mid.requiresLogin, upload.single('picture'), controllers.Domo.makeDomo);
 
     app.get('/getAccount', controllers.Account.getAccount);
     app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
