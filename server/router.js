@@ -33,6 +33,7 @@ const router = (app) => {
     );
 
     app.get('/getContent', controllers.Content.getContent);
+    app.get('/getAllContent', controllers.Content.getAllContent);
 };
 
 module.exports = router;

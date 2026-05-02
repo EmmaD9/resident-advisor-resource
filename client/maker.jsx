@@ -78,6 +78,66 @@ const ContentList = ({ reloadContent }) => {
     return <div className="contentList columns is-multiline">{contentNodes}</div>;
 };
 
+const ContentListAll = ({ reloadContent }) => {
+    const [contents, setContents] = React.useState([]);
+
+    React.useEffect(() => {
+        const loadContentFromServer = async () => {
+            const response = await fetch('/getAllContent');
+            const data = await response.json();
+            //debugging:
+            console.log("DATA FROM SERVER:", data);
+            setContents(data.contents || []);
+        };
+
+        loadContentFromServer();
+    }, [reloadContent]);
+
+    if (contents.length === 0) {
+        return (
+            <div className="contentListAll">
+                <h3 className="emptyContent">No Content Yet!</h3>
+            </div>
+        );
+    }
+
+    const contentNodes = contents.map((item) => {
+        const thumbnailSrc = item.thumbnail
+            ? `data:${item.thumbnailType};base64,${item.thumbnail}`
+            : "/assets/img/defaultThumbnail.png";
+
+        return (
+            <div key={item._id} className="contentCard box">
+                <img
+                    src={thumbnailSrc}
+                    alt="thumbnail"
+                    className="contentThumbnail"
+                    style={{ width: "150px", height: "150px", objectFit: "cover" }}
+                />
+
+                <h3 className="title is-4 mt-3">{item.title}</h3>
+                <p className="subtitle is-6">{item.description}</p>
+
+                <button
+                    className="button is-info mt-2"
+                    onClick={() => {
+                        if (!item.file) return;
+
+                        const link = document.createElement('a');
+                        link.href = `data:${item.fileType};base64,${item.file}`;
+                        link.download = `${item.title}`;
+                        link.click();
+                    }}
+                >
+                    Download File
+                </button>
+            </div>
+        );
+    });
+
+    return <div className="contentList columns is-multiline">{contentNodes}</div>;
+};
+
 const Profile = ({ setPage, reloadContent }) => {
     const [account, setAccount] = React.useState(null);
 
@@ -309,7 +369,11 @@ const Dashboard = ({ setPage, reloadContent }) => {
                     </ul>
                 </aside>
             </div>
-
+            <main className="column is-9">
+                <div className="columns is-multiline">
+                    <ContentListAll content={[]} reloadContent={reloadContent} />
+                </div>
+            </main>
         </div>
     );
 };

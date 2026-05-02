@@ -74,8 +74,35 @@ const getContent = async (req, res) => {
         return res.status(500).json({ error: 'Error retrieving content!' });
     }
 };
+
+const getAllContent = async (req, res) => {
+    try {
+        const docs = await Content.find().lean();
+
+        const contents = docs.map((doc) => ({
+            _id: doc._id,
+            title: doc.title,
+            description: doc.description,
+            thumbnail: doc.thumbnail?.data
+                ? doc.thumbnail.data.toString('base64')
+                : null,
+            thumbnailType: doc.thumbnail?.contentType || null,
+
+            file: doc.file?.data
+                ? doc.file.data.toString('base64')
+                : null,
+            fileType: doc.file?.contentType || null,
+        }));
+
+        return res.json({ contents });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ error: 'Error retrieving content!' });
+    }
+};
     
 module.exports = {
     makeContent,
-    getContent
+    getContent,
+    getAllContent
 }
