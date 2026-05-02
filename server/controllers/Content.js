@@ -41,15 +41,15 @@ const makeContent = async (req, res) => {
         const newContent = new Content(contentData);
         await newContent.save();
 
-        try {
-            await Account.updateOne(
-                { _id: req.session.account._id },
-                { $inc: { uploadCount: 1 } }
-            );
-        } catch (updateErr) {
-            console.log("UPLOAD COUNTER ERROR:", updateErr);
-            //idk why this isn't working but the rest of the upload works fine
-        }
+        // try {
+        //     await Account.updateOne(
+        //         { _id: req.session.account._id },
+        //         { $inc: { uploadCount: 1 } }
+        //     );
+        // } catch (updateErr) {
+        //     console.log("UPLOAD COUNTER ERROR:", updateErr);
+        //     //idk why this isn't working but the rest of the upload works fine
+        // }
 
         return res.status(201).json({
             title: newContent.title,
@@ -64,7 +64,6 @@ const makeContent = async (req, res) => {
 
 
 const getContent = async (req, res) => {
-    console.log("DB TAGS:", contents.map(c => c.tag));
     try {
         const query = { owner: req.session.account._id };
         const docs = await Content.find(query).lean().exec();
@@ -83,6 +82,7 @@ const getContent = async (req, res) => {
                 : null,
             fileType: doc.file?.contentType || null,
         }));
+    console.log("DB TAGS:", contents.map(c => c.tag));
 
         return res.json({ contents });
     } catch (err) {

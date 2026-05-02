@@ -415,6 +415,8 @@ const Upload = ({ setPage }) => {
 
         const formData = new FormData(e.target);
 
+        formData.set("tag", tag);
+
         const result = await fetch('/content', {
             method: 'POST',
             body: formData,
@@ -550,7 +552,6 @@ const Upload = ({ setPage }) => {
                                             </span>
                                         ))}
                                     </div>
-                                    <input type="hidden" name="tag" value={tag} />
                                     <p>Selected tag: {tag || "none"}</p>
                                 </div>
 
