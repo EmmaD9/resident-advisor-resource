@@ -18,7 +18,7 @@ const App = () => {
     );
 };
 
-const Profile = ({setPage}) => {
+const Profile = ({ setPage }) => {
     const [account, setAccount] = React.useState(null);
 
     //changing username
@@ -257,15 +257,86 @@ const Upload = ({ setPage }) => {
     return (
         <div>
             <div className="columns">
+                {/* Sidebar */}
                 <aside className="column is-2 menu section">
                     <p className="menu-label">Navigation</p>
                     <ul className="menu-list">
                         <li><a onClick={() => setPage("profile")}>Profile</a></li>
-                        <li><a onClick={() => setPage("dashboard")} >Dashboard</a></li>
-                        <li><a onClick={() => setPage("upload")}className="is-active">Upload</a></li>
+                        <li><a onClick={() => setPage("dashboard")}>Dashboard</a></li>
+                        <li><a onClick={() => setPage("upload")} className="is-active">Upload</a></li>
                         <li><a onClick={() => setPage("about")}>About</a></li>
                     </ul>
                 </aside>
+
+                {/* Main Content */}
+                <main className="column section">
+                    <div className="container">
+
+                        {/* title header */}
+                        <div className="card p-5">
+                            <h1 className="title has-text-centered">Upload a File</h1>
+                        </div>
+
+                        {/* thumbnail, title, description */}
+                        <div className="columns is-variable is-6 mt-5">
+
+                            {/* thumbnail */}
+                            <div className="column is-one-third">
+                                <div className="box has-text-centered" style={{ height: "220px" }}>
+                                    <span className="icon is-large">
+                                        <i className="fas fa-image fa-3x"></i>
+                                    </span>
+                                    <p className="mt-3">Add a thumbnail!</p>
+                                </div>
+                            </div>
+
+                            {/* title and description */}
+                            <div className="column">
+                                <div className="field">
+                                    <label className="label">Title</label>
+                                    <div className="control">
+                                        <input className="input" type="text" placeholder="Enter a title" />
+                                    </div>
+                                </div>
+
+                                <div className="field mt-4">
+                                    <label className="label">Description</label>
+                                    <div className="control">
+                                        <textarea className="textarea" placeholder="Write a description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* bottom row */}
+                        <div className="columns is-vcentered mt-5">
+                            <div className="column is-one-third">
+                                <div className="file has-name is-info">
+                                    <label className="file-label">
+                                        <input className="file-input" type="file" />
+                                        <span className="file-cta">
+                                            <span className="file-icon">
+                                                <i className="fas fa-cloud-upload-alt"></i>
+                                            </span>
+                                            <span className="file-label">Select a File</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div className="column">
+                                <label className="label">Tags</label>
+                                <div className="tags">
+                                    <span className="tag is-primary">Tag</span>
+                                    <span className="tag is-warning">Tag</span>
+                                    <span className="tag is-info">Tag</span>
+                                    <span className="tag is-light">Tag</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </main>
             </div>
         </div>
     );
@@ -281,7 +352,7 @@ const About = ({ setPage }) => {
                         <li><a onClick={() => setPage("profile")}>Profile</a></li>
                         <li><a onClick={() => setPage("dashboard")} >Dashboard</a></li>
                         <li><a onClick={() => setPage("upload")}>Upload</a></li>
-                        <li><a onClick={() => setPage("about")}className="is-active">About</a></li>
+                        <li><a onClick={() => setPage("about")} className="is-active">About</a></li>
                     </ul>
                 </aside>
             </div>
