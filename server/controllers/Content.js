@@ -58,11 +58,14 @@ const getContent = async (req, res) => {
             title: doc.title,
             description: doc.description,
             thumbnail: doc.thumbnail?.data
-                ? `data:${doc.thumbnail.contentType};base64,${doc.thumbnail.data.toString('base64')}`
+                ? doc.thumbnail.data.toString('base64')
                 : null,
+            thumbnailType: doc.thumbnail?.contentType || null,
+
             file: doc.file?.data
-                ? `data:${doc.file.contentType};base64,${doc.file.data.toString('base64')}`
+                ? doc.file.data.toString('base64')
                 : null,
+            fileType: doc.file?.contentType || null,
         }));
 
         return res.json({ contents });
