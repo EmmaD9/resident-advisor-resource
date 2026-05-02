@@ -11,7 +11,6 @@ const router = (app) => {
     app.get('/logout', mid.requiresLogin, controllers.Account.logout);
 
     app.get('/app', mid.requiresLogin, controllers.Account.appPage);
-    //app.post('/maker', mid.requiresLogin, upload.single('picture'), controllers.Domo.makeDomo);
 
     app.get('/getAccount', controllers.Account.getAccount);
     app.get('/', (req, res) => {

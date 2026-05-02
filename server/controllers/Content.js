@@ -4,8 +4,8 @@ const Content = models.Content;
 const makeContent = async (req, res) => {
 
     //expects a title, description, thumbnail, and file for download
-    if (!req.body.title || !req.body.description || !req.body.tag) {
-        return res.status(400).json({ error: 'Title and description and tag are required!' });
+    if (!req.body.title || !req.body.description) {
+        return res.status(400).json({ error: 'Title and description are required!' });
     }
 
     if (!req.files?.thumbnail?.[0] || !req.files?.file?.[0]) {
@@ -14,6 +14,7 @@ const makeContent = async (req, res) => {
 
     const thumbnailFile = req.files?.thumbnail?.[0] || null;
     const mainFile = req.files?.file?.[0] || null;
+    const tagValue = req.body.tag || 'other';
 
     const contentData = {
         title: req.body.title,

@@ -530,7 +530,7 @@ const Upload = ({ setPage }) => {
                                             </span>
                                         ))}
                                     </div>
-
+                                    <input type="hidden" name="tag" value={tag} />
                                     <p>Selected tag: {tag || "none"}</p>
                                 </div>
 

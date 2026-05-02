@@ -39,10 +39,9 @@ const ContentSchema = new mongoose.Schema({
     },
     tag: {
         type: String,
-        enum: {
-            values: ['doordec', 'bulletin', 'newsletter', 'event', 'other'],
-            message: '{VALUE} is not a valid tag'
-        }
+        enum: ['doordec', 'bulletin', 'newsletter', 'event', 'other'],
+        default: 'other',
+        required: true
     }
 });
 
