@@ -1,6 +1,6 @@
 const models = require('../models');
 const Content = models.Content;
-const Account = models.Account;
+//const Account = models.Account;
 
 const makeContent = async (req, res) => {
 
