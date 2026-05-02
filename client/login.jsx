@@ -2,25 +2,9 @@ const helper = require('./helper.js');
 const React = require('react');
 const { createRoot } = require('react-dom/client');
 
-const handleLogin = async (e) => {
-    e.preventDefault();
-
-    const response = await fetch('/login', {
-        method: 'POST',
-        body: new URLSearchParams(new FormData(e.target)),
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    });
-
-    const data = await response.json();
-
-    if (data.redirect) {
-        window.location = data.redirect;
-    }
-};
-
 const handleSignup = (e) => {
     e.preventDefault();
-    
+
     const formData = new URLSearchParams(new FormData(e.target));
 
     const username = formData.get('username');
@@ -41,32 +25,61 @@ const handleSignup = (e) => {
 
     helper.sendPost('/signup', formData);
 
-    helper.sendPost('/signup', formData);
-
     return false;
 }
 
 const LoginWindow = () => {
+    const [error, setError] = React.useState(null);
+    const [username, setUsername] = React.useState("");
+    const [pass, setPass] = React.useState("");
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        const result = await helper.sendPost('/login', { username, pass });
+
+        if (result?.error) {
+            setError({ code: result.status, message: result.error });
+            return;
+        }
+
+        window.location.href = '/app';
+    };
+
     return (
-        <form id="loginForm" onSubmit={handleLogin}>
-            <div className="field">
-                <label className="label">Username</label>
-                <div className="control">
-                    <input className="input" type="text" name="username" placeholder="Username" required />
-                </div>
-            </div>
+        <div className="box">
 
-            <div className="field">
-                <label className="label">Password</label>
-                <div className="control">
-                    <input className="input" type="password" name="pass" placeholder="Password" required />
+            {error && (
+                <div className="notification is-danger">
+                    <button className="delete" onClick={() => setError(null)}></button>
+                    <strong>Error {error.code}:</strong> {error.message}
                 </div>
-            </div>
+            )}
 
-            <div className="field">
-                <button className="button is-success is-fullwidth" type="submit">Login</button>
-            </div>
-        </form>
+            <form id="loginForm" onSubmit={handleLogin}>
+                <div className="field">
+                    <label className="label">Username</label>
+                    <div className="control">
+                        <input className="input" type="text" name="username" placeholder="Username" value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required />
+                    </div>
+                </div>
+
+                <div className="field">
+                    <label className="label">Password</label>
+                    <div className="control">
+                        <input className="input" type="password" name="pass" placeholder="Password" value={pass}
+                            onChange={(e) => setPass(e.target.value)}
+ required />
+                    </div>
+                </div>
+
+                <div className="field">
+                    <button className="button is-success is-fullwidth" type="submit">Login</button>
+                </div>
+            </form>
+        </div>
     );
 };
 

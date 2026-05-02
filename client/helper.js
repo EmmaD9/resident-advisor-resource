@@ -1,11 +1,14 @@
 /* Takes in an error message. Sets the error message up in html, and
    displays it to the user. Will be hidden by other events that could
    end in an error.
-*/
-const handleError = (message) => {
-    //document.getElementById('errorMessage').textContent = message;
-   // document.getElementById('domoMessage').classList.remove('hidden');
-};
+// */
+// const handleError = (message) => {
+//     document.getElementById('errorMessage').textContent = message;
+// };
+
+// const removeError = (message) => {
+//     document.getElementById('errorMessage').textContent = '';
+// };
 
 // Rewritten send post for handling files posted
 const sendPost = async (url, data, handler) => {
@@ -33,7 +36,10 @@ const sendPost = async (url, data, handler) => {
     const response = await fetch(url, options);
     const result = await response.json();
 
-    //document.getElementById('domoMessage').classList.add('hidden');
+    if (!response.ok) {
+        return { error: result.error, status: response.status };
+    }
+
 
     if (result.redirect) {
         window.location = result.redirect;
@@ -49,6 +55,5 @@ const sendPost = async (url, data, handler) => {
 };
 
 module.exports = {
-    handleError,
     sendPost
 };
