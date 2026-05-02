@@ -1,0 +1,29 @@
+What is the purpose of your application? What does it do?
+● How are you using React?
+○ What components do you have?
+● What data are you storing in MongoDB?
+● What is your profit model?
+● What went right in the development of this project?
+● What went wrong in the development of this project?
+● What did you learn while developing this project?
+● If you were to continue, what would you do to improve your application?
+● If you went above and beyond, how did you do so?
+● If you used any borrowed code or code fragments, where did you get them from?
+What do the code fragments do? Where are they in your code?
+
+Endpoint Documentation
+You must document each data endpoint (each one listed in your router.js). This
+documentation should be done in your written documentation after you answer the
+above questions. Describe each endpoint with the following information:
+● The URL of the endpoint
+The supported methods of the endpoint (GET, POST, etc)
+● What middleware the endpoint uses.
+● Any query/body parameters that the endpoint accepts/requires.
+● A brief description of what the endpoint does and returns.
+Example:
+URL: /getDogByName
+Supported Methods: GET, HEAD
+Middleware: Requires Secure, Requires Login
+Query Params: dogName (the name of the dog being searched for)
+Description: Retrieves information about a specific dog.
+Return Type(s): JSON

@@ -384,6 +384,30 @@ const Profile = ({ setPage, reloadContent }) => {
 };
 
 const Dashboard = ({ setPage, reloadContent }) => {
+    const [tag, setTag] = useState("");
+    const [content, setContent] = useState([]);
+
+    // loads content but not working either
+    useEffect(() => {
+        const loadContent = async () => {
+            try {
+                const res = await fetch("/getAllContent");
+                const data = await res.json();
+                console.log("data from /getAllContent:", data);
+                setContent(data.contents);
+            } catch (err) {
+                console.error("Failed to load content:", err);
+            }
+        };
+
+        loadContent();
+    }, [reloadContent]);
+
+    //filters by tag (not working)
+    const filteredContent = tag
+        ? content.filter((item) => item.tag === tag)
+        : content;
+
     return (
         <div>
             <div className="columns">
@@ -396,10 +420,27 @@ const Dashboard = ({ setPage, reloadContent }) => {
                         <li><a onClick={() => setPage("about")}>About</a></li>
                     </ul>
                 </aside>
+
+                <div className="tags">
+                    {TAG_OPTIONS.map((t) => (
+                        <span
+                            key={t.value}
+                            className={`tag ${t.color} ${tag === t.value ? "is-selected" : ""}`}
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                                console.log("tag clicked");
+                                setTag(t.value);
+                            }}
+                        >
+                            {t.label}
+                        </span>
+                    ))}
+                </div>
+                
             </div>
             <main className="column is-9">
                 <div className="columns is-multiline">
-                    <ContentListAll content={[]} reloadContent={reloadContent} />
+                    <ContentListAll content={filteredContent} reloadContent={reloadContent} />
                 </div>
             </main>
         </div>
