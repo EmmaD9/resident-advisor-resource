@@ -78,13 +78,13 @@ const changeDisplayName = async (req, res) => {
         return res.status(401).json({ error: 'Not logged in' });
     }
 
-    const newName = req.body.displayName;
+    const newName = req.body.newName;
 
     if(!newName){
         return res.status(400).json({ error: 'Display name required' });
     }
     try {
-        const account = await AccountModel.findById(req.session.account._id);
+        const account = await Account.findById(req.session.account._id);
         account.displayName = newName;
         await account.save();
 
@@ -108,17 +108,19 @@ const changePassword = async (req, res) => {
     }
 
     try {
-        const account = await AccountModel.findById(req.session.account._id);
-        const match = await AccountModel.authenticate(
-            account.username,
-            oldPass
-        );
+        const account = await Account.findById(req.session.account._id);
+        const match = await new Promise((resolve) => {
+            Account.authenticate(account.username, oldPass, (err, doc) => {
+                if (err || !doc) return resolve(false);
+                resolve(true);
+            });
+        });
 
         if(!match){
             return res.status(400).json({error: 'old password incorrect'});
         }
 
-        const hash = await AccountModel.generateHash(newPass);
+        const hash = await Account.generateHash(newPass);
         account.password = hash;
         await account.save();
 
@@ -133,12 +135,14 @@ const getAccount = (req, res) => {
         return res.status(401).json({ error: 'Not logged in' });
     }
 
+    const account = await Account.findById(req.session.account._id).lean();
+
     return res.json({
-        username: req.session.account.username,
-        displayName: req.session.account.displayName,
-        school: req.session.account.school,
-        createdDate: req.session.account.createdDate,
-        uploads: req.session.account.uploads,
+        username: account.username,
+        displayName: account.displayName,
+        school: account.school,
+        createdDate: account.createdDate,
+        uploads: account.uploads || 0,
     });
 };
 
