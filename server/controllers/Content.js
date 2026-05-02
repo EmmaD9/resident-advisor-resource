@@ -53,7 +53,7 @@ const getContent = async (req, res) => {
         const query = { owner: req.session.account._id };
         const docs = await Content.find(query).lean().exec();
 
-        const content = docs.map((doc) => ({
+        const contents = docs.map((doc) => ({
             _id: doc._id,
             title: doc.title,
             description: doc.description,
@@ -65,7 +65,7 @@ const getContent = async (req, res) => {
                 : null,
         }));
 
-        return res.json({ content });
+        return res.json({ contents });
     } catch (err) {
         console.log(err);
         return res.status(500).json({ error: 'Error retrieving content!' });

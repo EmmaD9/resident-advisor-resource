@@ -31,6 +31,8 @@ const router = (app) => {
         ]),
         controllers.Content.makeContent
     );
+
+    app.get('/getContent', controllers.Content.getContent);
 };
 
 module.exports = router;
