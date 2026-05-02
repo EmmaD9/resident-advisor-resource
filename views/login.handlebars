@@ -9,14 +9,11 @@
   <script src="https://kit.fontawesome.com/35b0bcdf95.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="has-background-warning-light">
   <nav class="navbar is-dark">
-    
-    <div class="navbar-start is-flex-grow-1 is-justify-content-center">
-      <a class="navbar-item  " href="/login">
-        <img src="assets/img/ra-resource-logo.png" alt="face logo">
-      </a>
-   </div>
+
+    <div class="navbar-start is-flex-grow-1 is-justify-content-center has-background-info">
+    </div>
     </div>
   </nav>
 
@@ -24,29 +21,30 @@
     <div class="container">
 
       <div class="columns is-centered">
-        
-          <div class="box has-text-centered">
-            <br>
-            <div class="has-text-centered mb-4">
-              <span class="icon is-large">
-                <i class="fa-solid fa-circle-user" style="font-size: 6rem;"></i>
-              </span>
-            </div>
-            <br>
 
-            <h2 class="title is-4 mt-3">Account</h2>
-            <a id="loginNav" class="button">Login</a>
-            <a id="signupNav" class="button">Sign Up</a>
-
-            <!-- React Login Mount -->
-            <div id="loginRoot" style="display:none;"></div>
-          
-            <!-- React Signup Mount -->
-            <div id="signupRoot" style="display:none;"></div>
+        <div class="column is-two-thirds is-capped box has-text-centered has-background-info">
+          <br>
+          <div class="has-text-centered mb-4">
+            <figure class="image is-1423by543">
+            <img src="/assets/img/ra-resource-logo.png" alt="RA Resource Logo" >
+          </figure>
           </div>
-        </div>
+          <br>
 
+          
+          <a id="loginNav" class="button has-background-success-dark has-text-warning" >Login</a>
+          <a id="signupNav" class="button has-background-success-dark has-text-warning">Sign Up</a>
+          <br><br>
+
+          <!-- React Login Mount -->
+          <div id="loginRoot" style="display:none;"></div>
+
+          <!-- React Signup Mount -->
+          <div id="signupRoot" style="display:none;"></div>
+        </div>
       </div>
+
+    </div>
     </div>
   </section>
 

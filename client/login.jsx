@@ -167,9 +167,8 @@ const init = () => {
     if (signupRoot) {
         createRoot(signupRoot).render(<SignupWindow />);
     }
-
-    // Default: hide both
-    loginRoot.style.display = 'none';
+    
+    loginRoot.style.display = 'block';
     signupRoot.style.display = 'none';
 
     // Attach navbar buttons

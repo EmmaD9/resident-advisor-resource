@@ -249,7 +249,7 @@ const Profile = ({ setPage, reloadContent }) => {
             <div className="columns">
                 <aside className="column is-2 menu section">
                     <figure className="image is-16by9">
-                        <img src="/assets/img/ra-resource-logo.png" alt="RA Resource Logo" />
+                        <img src="/assets/img/ra-resource-logo-solid.png" alt="RA Resource Logo" />
                         </figure>
 
                     <p className="menu-label">Navigation</p>
@@ -418,7 +418,7 @@ const Dashboard = ({ setPage, reloadContent }) => {
             <div className="columns">
                 <aside className="column is-2 menu section">
                     <figure className="image is-16by9">
-                        <img src="/assets/img/ra-resource-logo.png" alt="RA Resource Logo" />
+                        <img src="/assets/img/ra-resource-logo-solid.png" alt="RA Resource Logo" />
                         </figure>
                     <p className="menu-label">Navigation</p>
                     <ul className="menu-list">
@@ -485,7 +485,7 @@ const Upload = ({ setPage }) => {
                 {/* Sidebar */}
                 <aside className="column is-2 menu section">
                     <figure className="image is-16by9">
-                        <img src="/assets/img/ra-resource-logo.png" alt="RA Resource Logo" />
+                        <img src="/assets/img/ra-resource-logo-solid.png" alt="RA Resource Logo" />
                         </figure>
                     <p className="menu-label">Navigation</p>
                     <ul className="menu-list">
@@ -631,7 +631,7 @@ const About = ({ setPage }) => {
             <div className="columns">
                 <aside className="column is-2 menu section">
                     <figure className="image is-16by9">
-                        <img src="/assets/img/ra-resource-logo.png" alt="RA Resource Logo" />
+                        <img src="/assets/img/ra-resource-logo-solid.png" alt="RA Resource Logo" />
                         </figure>
                     <p className="menu-label">Navigation</p>
                     <ul className="menu-list">
