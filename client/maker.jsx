@@ -34,7 +34,6 @@ const ContentList = ({ reloadContent }) => {
         const loadContentFromServer = async () => {
             const response = await fetch('/getContent');
             const data = await response.json();
-            //debugging:
             console.log("DATA FROM SERVER:", data);
             setContents(data.contents || []);
         };
@@ -51,6 +50,12 @@ const ContentList = ({ reloadContent }) => {
     }
 
     const contentNodes = contents.map((item) => {
+        console.log("ITEM TAG:", item.tag);
+
+        const tagInfo = TAG_OPTIONS.find(
+            t => t.value === item.tag?.toLowerCase()
+        );
+
         const thumbnailSrc = item.thumbnail
             ? `data:${item.thumbnailType};base64,${item.thumbnail}`
             : "/assets/img/defaultThumbnail.png";
@@ -63,6 +68,12 @@ const ContentList = ({ reloadContent }) => {
                     className="contentThumbnail"
                     style={{ width: "150px", height: "150px", objectFit: "cover" }}
                 />
+
+                {tagInfo && (
+                    <span className={`tag ${tagInfo.color} mt-2`}>
+                        {tagInfo.label}
+                    </span>
+                )}
 
                 <h3 className="title is-4 mt-3">{item.title}</h3>
                 <p className="subtitle is-6">{item.description}</p>

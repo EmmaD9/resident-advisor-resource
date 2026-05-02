@@ -16,6 +16,7 @@ const makeContent = async (req, res) => {
     const thumbnailFile = req.files?.thumbnail?.[0] || null;
     const mainFile = req.files?.file?.[0] || null;
     const tagValue = req.body.tag || 'other';
+    console.log("TAG RECEIVED FROM FORM:", req.body.tag);
 
     const contentData = {
         title: req.body.title,
@@ -63,6 +64,7 @@ const makeContent = async (req, res) => {
 
 
 const getContent = async (req, res) => {
+    console.log("DB TAGS:", contents.map(c => c.tag));
     try {
         const query = { owner: req.session.account._id };
         const docs = await Content.find(query).lean().exec();
