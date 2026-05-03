@@ -333,12 +333,13 @@ const Profile = ({ setPage, reloadContent }) => {
                                         </button>
 
                                         <button
-                                            className="button is-danger is-fullwidth mt-2"
+                                            className="button is-danger is-fullwidth mt-2 has-tooltip-bottom has-tooltip-multiline"
+                                            data-tooltip="Assignment Feature(Add a Profit Model Concept) Premium account content is available for a fee, and premium user's content is added to the collection of premium works"
                                             onClick={premiumToggle}
-
                                         >
                                             Toggle Premium
                                         </button>
+
 
                                         <a href="/logout" className="button is-success is-fullwidth mt-4">
                                             Log Out
