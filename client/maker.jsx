@@ -122,7 +122,6 @@ const ContentListAll = ({ reloadContent }) => {
     }
 
     const contentNodes = contents.map((item) => {
-        
         const thumbnailSrc = item.thumbnail
             ? `data:${item.thumbnailType};base64,${item.thumbnail}`
             : "/assets/img/defaultThumbnail.png";

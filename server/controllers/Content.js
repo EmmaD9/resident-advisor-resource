@@ -93,22 +93,13 @@ const getContent = async (req, res) => {
 
 const getAllContent = async (req, res) => {
     try {
-        const docs = await Content.find().lean();
+        //this fixed showing the item tag too
+        const docs = await Content.find()
+            //allows username access    
+            .populate('owner', 'displayName username')
+            .lean();
 
-        const contents = docs.map((doc) => ({
-            _id: doc._id,
-            title: doc.title,
-            description: doc.description,
-            thumbnail: doc.thumbnail?.data
-                ? doc.thumbnail.data.toString('base64')
-                : null,
-            thumbnailType: doc.thumbnail?.contentType || null,
-
-            file: doc.file?.data
-                ? doc.file.data.toString('base64')
-                : null,
-            fileType: doc.file?.contentType || null,
-        }));
+        const contents = docs.map((doc) => Content.toAPI(doc));
 
         return res.json({ contents });
     } catch (err) {
