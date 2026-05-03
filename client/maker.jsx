@@ -249,28 +249,28 @@ const Profile = ({ setPage, reloadContent }) => {
         console.log("Profile loaded with setPage:", setPage);
     };
 
-    const premiumToggle = async (e) => {
-        e.preventDefault();
+    // const premiumToggle = async (e) => {
+    //     e.preventDefault();
 
-        const response = await fetch('/updatePassword', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ oldPass, newPass }),
-        });
+    //     const response = await fetch('/updatePassword', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify({ oldPass, newPass }),
+    //     });
 
-        const result = await response.json();
+    //     const result = await response.json();
 
-        if (result.error) {
-            console.error(result.error);
-            return;
-        }
+    //     if (result.error) {
+    //         console.error(result.error);
+    //         return;
+    //     }
 
-        setOldPass("");
-        setNewPass("");
+    //     setOldPass("");
+    //     setNewPass("");
 
-        setShowPasswordModal(false);
-        console.log("Profile loaded with setPage:", setPage);
-    };
+    //     setShowPasswordModal(false);
+    //     console.log("Profile loaded with setPage:", setPage);
+    // };
 
     return (
         <div>
