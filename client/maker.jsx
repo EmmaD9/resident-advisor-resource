@@ -577,7 +577,7 @@ const Upload = ({ setPage }) => {
                                         <span className="icon is-large">
                                             <i className="fas fa-image fa-3x"></i>
                                         </span>
-                                        <p className="mt-3">Add a thumbnail!</p>
+                                        <p className="mt-3">Add a thumbnail! (reccomended 1:1 ratio)</p>
 
                                         <input
                                             className="file-input mt-3"
@@ -634,7 +634,7 @@ const Upload = ({ setPage }) => {
                                                 <span className="file-icon">
                                                     <i className="fas fa-cloud-upload-alt"></i>
                                                 </span>
-                                                <span className="file-label">Select a File</span>
+                                                <span className="file-label">Select a File (limited size)</span>
                                             </span>
                                         </label>
                                     </div>
