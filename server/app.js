@@ -43,7 +43,7 @@ app.use(
         contentSecurityPolicy: {
             directives: {
                 defaultSrc: ["'self'"],
-                scriptSrc: ["'self'", "https://kit.fontawesome.com"],
+                //scriptSrc: ["'self'", "https://kit.fontawesome.com"],
                 styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
                 imgSrc: ["'self'", "data:", "https://bulma.io"],
                 fontSrc: ["'self'", "https://fonts.gstatic.com"],
