@@ -144,6 +144,7 @@ const ContentListAll = ({ content: incomingContent, reloadContent }) => {
 
                 <h3 className="title is-4 mt-3">{item.title}</h3>
                 <h3 className="title is-5 mt-3">Author: {item.owner}</h3>
+                <p className="subtitle is-6">Premium Content:{item.owner.isPro ? "Yes" : "No"}</p>
                 <p className="subtitle is-6">{item.description}</p>
 
                 {tagInfo && (
