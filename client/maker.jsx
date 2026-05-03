@@ -98,10 +98,16 @@ const ContentList = ({ reloadContent }) => {
     return <div className="contentList columns is-multiline">{contentNodes}</div>;
 };
 
-const ContentListAll = ({ reloadContent }) => {
-    const [contents, setContents] = React.useState([]);
+const ContentListAll = ({ content: incomingContent, reloadContent }) => {
+    const [contents, setContents] = React.useState(incomingContent || []);
 
     React.useEffect(() => {
+        // if given filtered content
+        if (incomingContent && incomingContent.length > 0) {
+            setContents(incomingContent);
+            return;
+        }
+
         const loadContentFromServer = async () => {
             const response = await fetch('/getAllContent');
             const data = await response.json();
@@ -111,7 +117,7 @@ const ContentListAll = ({ reloadContent }) => {
         };
 
         loadContentFromServer();
-    }, [reloadContent]);
+    }, [incomingContent, reloadContent]);
 
     if (contents.length === 0) {
         return (
@@ -122,7 +128,6 @@ const ContentListAll = ({ reloadContent }) => {
     }
 
     const contentNodes = contents.map((item) => {
-        
         const thumbnailSrc = item.thumbnail
             ? `data:${item.thumbnailType};base64,${item.thumbnail}`
             : "/assets/img/defaultThumbnail.png";
@@ -193,7 +198,7 @@ const Profile = ({ setPage, reloadContent }) => {
     if (!account) {
         return (
             <a href="/logout" class="button is-success is-fullwidth mt-4">
-                no account found
+                no account found, return to sign in page
             </a>
         )
     }
@@ -222,6 +227,29 @@ const Profile = ({ setPage, reloadContent }) => {
     };
 
     const changePassword = async (e) => {
+        e.preventDefault();
+
+        const response = await fetch('/updatePassword', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ oldPass, newPass }),
+        });
+
+        const result = await response.json();
+
+        if (result.error) {
+            console.error(result.error);
+            return;
+        }
+
+        setOldPass("");
+        setNewPass("");
+
+        setShowPasswordModal(false);
+        console.log("Profile loaded with setPage:", setPage);
+    };
+
+    const premiumToggle = async (e) => {
         e.preventDefault();
 
         const response = await fetch('/updatePassword', {
@@ -392,25 +420,23 @@ const Dashboard = ({ setPage, reloadContent }) => {
     const [tag, setTag] = useState("");
     const [content, setContent] = useState([]);
 
-    // loads content but not working either
     useEffect(() => {
         const loadContent = async () => {
             try {
                 const res = await fetch("/getAllContent");
                 const data = await res.json();
-                console.log("data from /getAllContent:", data);
-                setContent(data.contents);
-            } catch (err) {
-                console.error("Failed to load content:", err);
-            }
+                setContent(data.contents || []);
+            } catch (err) { }
         };
 
         loadContent();
     }, [reloadContent]);
 
-    //filters by tag (not working)
+    //filter content tags
     const filteredContent = tag
-        ? content.filter((item) => item.tag === tag)
+        ? content.filter(item =>
+            item.tag?.toLowerCase() === tag.toLowerCase()
+        )
         : content;
 
     return (
@@ -419,7 +445,7 @@ const Dashboard = ({ setPage, reloadContent }) => {
                 <aside className="column is-2 menu section">
                     <figure className="image is-16by9">
                         <img src="/assets/img/ra-resource-logo-solid.png" alt="RA Resource Logo" />
-                        </figure>
+                    </figure>
                     <p className="menu-label">Navigation</p>
                     <ul className="menu-list">
                         <li><a onClick={() => setPage("profile")}>Profile</a></li>
@@ -436,19 +462,33 @@ const Dashboard = ({ setPage, reloadContent }) => {
                             className={`tag ${t.color} ${tag === t.value ? "is-selected" : ""}`}
                             style={{ cursor: "pointer" }}
                             onClick={() => {
-                                console.log("tag clicked");
+                                //should trigger the filter
                                 setTag(t.value);
+                                console.log("Clicked:", t.value);
                             }}
                         >
                             {t.label}
                         </span>
                     ))}
+
+                    {tag && (
+                        <span
+                            className="tag is-light ml-2"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => setTag("")}
+                        >
+                            Clear Filter
+                        </span>
+                    )}
                 </div>
-                
             </div>
+
             <main className="column is-9">
                 <div className="columns is-multiline">
-                    <ContentListAll content={filteredContent} reloadContent={reloadContent} />
+                    <ContentListAll
+                        content={filteredContent}
+                        reloadContent={reloadContent}
+                    />
                 </div>
             </main>
         </div>
@@ -596,8 +636,9 @@ const Upload = ({ setPage }) => {
                                                 className={`tag ${t.color} ${tag === t.value ? "is-selected" : ""}`}
                                                 style={{ cursor: "pointer" }}
                                                 onClick={() => {
-                                                    console.log("tag clicked");
                                                     setTag(t.value);
+                                                    console.log(t.value);
+                                                    
                                                 }}
                                             >
                                                 {t.label}
