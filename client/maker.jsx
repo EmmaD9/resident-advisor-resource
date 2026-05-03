@@ -334,7 +334,7 @@ const Profile = ({ setPage, reloadContent }) => {
 
                                         <button
                                             className="button is-danger is-fullwidth mt-2 has-tooltip-bottom has-tooltip-multiline"
-                                            data-tooltip="Assignment Feature(Add a Profit Model Concept) Premium account content is available for a fee, and premium user's content is added to the collection of premium works"
+                                            data-tooltip="Assignment Feature (Add a Profit Model Concept) Premium account content is available for a fee, and premium user's content is added to the collection of premium works"
                                             onClick={premiumToggle}
                                         >
                                             Toggle Premium
@@ -708,6 +708,8 @@ const About = ({ setPage }) => {
                             <h2 class="subtitle">A project for everyone's favorite class™: IGME 420</h2>
                            <br></br>
                             This was a very open ended assignment, with the goal "to create a satisfying and engaging web application that users would actually use in the real world". As a Resident Advisor, I am tasked with creating and designing a number of bulletin boards, events, name tags, and fliers for residents to engage with. As a staff, we often talk about creating a sharing system so that fellow RAs in other buildings on other staffs can access and edit our files that we've put together for bulletin boards. This has been a goal of mine for a while, and this assignment was the perfect opportunity to learn more about fullstack web development.
+                            <br></br><br></br>
+                            This site allows users to upload PDFs of their designs (currently only one pdf and thumbnail work right now, a future goal is to allow multiple PDFS and a gallery of thumbnails) along with a description and title of the file. This allows other users to access these files for their own use, and for the owner to have all RA designs in one place with explanations on how and what they were used for.
                             <br></br><br></br>
                             I used React and Handlebars for the frontend development and dynamic components. I used Mongoose to write to MongoDB for storing user and content information, and Redis for session persistance. For styling I relied on <a href="https://bulma.io/" target="_blank" className="is-link">Bulma's stylesheet</a>, the add on <a href="https://bulma-tooltip.netlify.app/" target="_blank" className="is-link">Bulma ToolTip </a>as well as some icons from <a href="https://fontawesome.com/" target="_blank" className="is-link">Font Awesome</a>.
                             <br></br><br></br>
