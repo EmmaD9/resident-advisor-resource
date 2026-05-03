@@ -699,17 +699,50 @@ const About = ({ setPage }) => {
                         <li><a onClick={() => setPage("about")} className="is-active">About</a></li>
                     </ul>
                 </aside>
+                <main className="column section">
+                    <div className="column  is-three-fifths is-centered ml-6">
 
-                <div className="column is-half">
+                        <div className="box has-background-light has-text-centered">
 
-                    <div className="box has-background-light has-text-centered ml-6">
-
-                        This was a project for everyone's favorite class, IGME 420
-
-
-
+                            <h1 class="title">About</h1>
+                            <h2 class="subtitle">A project for everyone's favorite class™: IGME 420</h2>
+                           <br></br>
+                            This was a very open ended assignment, with the goal "to create a satisfying and engaging web application that users would actually use in the real world". As a Resident Advisor, I am tasked with creating and designing a number of bulletin boards, events, name tags, and fliers for residents to engage with. As a staff, we often talk about creating a sharing system so that fellow RAs in other buildings on other staffs can access and edit our files that we've put together for bulletin boards. This has been a goal of mine for a while, and this assignment was the perfect opportunity to learn more about fullstack web development.
+                            <br></br><br></br>
+                            I used React and Handlebars for the frontend development and dynamic components. I used Mongoose to write to MongoDB for storing user and content information, and Redis for session persistance. For styling I relied on <a href="https://bulma.io/" target="_blank" className="is-link">Bulma's stylesheet</a>, the add on <a href="https://bulma-tooltip.netlify.app/" target="_blank" className="is-link">Bulma ToolTip </a>as well as some icons from <a href="https://fontawesome.com/" target="_blank" className="is-link">Font Awesome</a>.
+                            <br></br><br></br>
+                            I would like to continue work on this project, I have a list of stretch goals and additionals features I would like to add as well.
+                        </div>
+                        <div className="box has-background-light has-text-centered">
+                            <a
+                                href="https://github.com/EmmaD9/resident-advisor-resource"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="button is-danger mt-2"
+                            >
+                                Github
+                            </a>
+                            <br></br>
+                            <a
+                                href="https://emma.iduprey.com/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="button is-danger mt-2"
+                            >
+                                My Portfolio
+                            </a>
+                            <br></br>
+                            <a
+                                href="https://www.canva.com/design/DAHGNWzMgA0/MhTkNDJKG9ueYp3jvpiO2g/view?utm_content=DAHGNWzMgA0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h985da511d2"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="button is-danger mt-2"
+                            >
+                                Original Concept
+                            </a>
+                        </div>
                     </div>
-                </div>
+                </main>
             </div>
         </div>
     );
