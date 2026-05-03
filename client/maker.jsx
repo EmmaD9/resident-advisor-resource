@@ -98,10 +98,89 @@ const ContentList = ({ reloadContent }) => {
     return <div className="contentList columns is-multiline">{contentNodes}</div>;
 };
 
-const ContentListAll = ({ reloadContent }) => {
+const ContentListFilter = ({ reloadContent, selectedTag }) => {
     const [contents, setContents] = React.useState([]);
 
     React.useEffect(() => {
+        const loadContentFromServer = async () => {
+            const response = await fetch('/getContent');
+            const data = await response.json();
+            console.log("DATA FROM SERVER:", data);
+            setContents(data.contents || []);
+        };
+
+        loadContentFromServer();
+    }, [reloadContent]);
+
+    const filtered = selectedTag
+        ? contents.filter(item => item.tag?.toLowerCase() === selectedTag.toLowerCase())
+        : contents;
+
+    if (filtered.length === 0) {
+        return (
+            <div className="contentList">
+                <h3 className="emptyContent">No Content Yet!</h3>
+            </div>
+        );
+    }
+
+    const contentNodes = filtered.map(item => {
+        const tagInfo = TAG_OPTIONS.find(
+            t => t.value === item.tag?.toLowerCase()
+        );
+
+        const thumbnailSrc = item.thumbnail
+            ? `data:${item.thumbnailType};base64,${item.thumbnail}`
+            : "/assets/img/defaultThumbnail.png";
+
+        return (
+            <div key={item._id} className="contentCard box">
+                <img
+                    src={thumbnailSrc}
+                    alt="thumbnail"
+                    className="contentThumbnail"
+                    style={{ width: "150px", height: "150px", objectFit: "cover" }}
+                />
+
+                {tagInfo && (
+                    <span className={`tag ${tagInfo.color} mt-2`}>
+                        {tagInfo.label}
+                    </span>
+                )}
+
+                <h3 className="title is-4 mt-3">{item.title}</h3>
+                <p className="subtitle is-6">{item.description}</p>
+
+                <button
+                    className="button is-info mt-2"
+                    onClick={() => {
+                        if (!item.file) return;
+
+                        const link = document.createElement('a');
+                        link.href = `data:${item.fileType};base64,${item.file}`;
+                        link.download = `${item.title}`;
+                        link.click();
+                    }}
+                >
+                    Download File
+                </button>
+            </div>
+        );
+    });
+
+    return <div className="contentList columns is-multiline">{contentNodes}</div>;
+};
+
+const ContentListAll = ({ content: incomingContent, reloadContent }) => {
+    const [contents, setContents] = React.useState(incomingContent || []);
+
+    React.useEffect(() => {
+        // if given filtered content
+        if (incomingContent && incomingContent.length > 0) {
+            setContents(incomingContent);
+            return;
+        }
+
         const loadContentFromServer = async () => {
             const response = await fetch('/getAllContent');
             const data = await response.json();
@@ -111,7 +190,7 @@ const ContentListAll = ({ reloadContent }) => {
         };
 
         loadContentFromServer();
-    }, [reloadContent]);
+    }, [incomingContent, reloadContent]);
 
     if (contents.length === 0) {
         return (
@@ -391,25 +470,23 @@ const Dashboard = ({ setPage, reloadContent }) => {
     const [tag, setTag] = useState("");
     const [content, setContent] = useState([]);
 
-    // loads content but not working either
     useEffect(() => {
         const loadContent = async () => {
             try {
                 const res = await fetch("/getAllContent");
                 const data = await res.json();
-                console.log("data from /getAllContent:", data);
-                setContent(data.contents);
-            } catch (err) {
-                console.error("Failed to load content:", err);
-            }
+                setContent(data.contents || []);
+            } catch (err) { }
         };
 
         loadContent();
     }, [reloadContent]);
 
-    //filters by tag (not working)
+    //filter content tags
     const filteredContent = tag
-        ? content.filter((item) => item.tag === tag)
+        ? content.filter(item =>
+            item.tag?.toLowerCase() === tag.toLowerCase()
+        )
         : content;
 
     return (
@@ -418,7 +495,7 @@ const Dashboard = ({ setPage, reloadContent }) => {
                 <aside className="column is-2 menu section">
                     <figure className="image is-16by9">
                         <img src="/assets/img/ra-resource-logo-solid.png" alt="RA Resource Logo" />
-                        </figure>
+                    </figure>
                     <p className="menu-label">Navigation</p>
                     <ul className="menu-list">
                         <li><a onClick={() => setPage("profile")}>Profile</a></li>
@@ -435,19 +512,33 @@ const Dashboard = ({ setPage, reloadContent }) => {
                             className={`tag ${t.color} ${tag === t.value ? "is-selected" : ""}`}
                             style={{ cursor: "pointer" }}
                             onClick={() => {
-                                console.log("tag clicked");
+                                //should trigger the filter
                                 setTag(t.value);
+                                console.log("Clicked:", t.value);
                             }}
                         >
                             {t.label}
                         </span>
                     ))}
+
+                    {tag && (
+                        <span
+                            className="tag is-light ml-2"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => setTag("")}
+                        >
+                            Clear Filter
+                        </span>
+                    )}
                 </div>
-                
             </div>
+
             <main className="column is-9">
                 <div className="columns is-multiline">
-                    <ContentListAll content={filteredContent} reloadContent={reloadContent} />
+                    <ContentListAll
+                        content={filteredContent}
+                        reloadContent={reloadContent}
+                    />
                 </div>
             </main>
         </div>
@@ -595,8 +686,9 @@ const Upload = ({ setPage }) => {
                                                 className={`tag ${t.color} ${tag === t.value ? "is-selected" : ""}`}
                                                 style={{ cursor: "pointer" }}
                                                 onClick={() => {
-                                                    console.log("tag clicked");
                                                     setTag(t.value);
+                                                    console.log(t.value);
+                                                    
                                                 }}
                                             >
                                                 {t.label}
