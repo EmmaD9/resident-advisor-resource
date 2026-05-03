@@ -53,6 +53,11 @@ const AccountSchema = new mongoose.Schema({
     trim: true,
     match: /^[A-Za-z0-9_\-.]{1,16}$/,
   },
+  isPro: {
+    type: Boolean,
+    default: false,
+    required: true 
+  }
 });
 
 // Converts a doc to something we can store in redis later on.

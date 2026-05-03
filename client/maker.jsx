@@ -98,79 +98,6 @@ const ContentList = ({ reloadContent }) => {
     return <div className="contentList columns is-multiline">{contentNodes}</div>;
 };
 
-const ContentListFilter = ({ reloadContent, selectedTag }) => {
-    const [contents, setContents] = React.useState([]);
-
-    React.useEffect(() => {
-        const loadContentFromServer = async () => {
-            const response = await fetch('/getContent');
-            const data = await response.json();
-            console.log("DATA FROM SERVER:", data);
-            setContents(data.contents || []);
-        };
-
-        loadContentFromServer();
-    }, [reloadContent]);
-
-    const filtered = selectedTag
-        ? contents.filter(item => item.tag?.toLowerCase() === selectedTag.toLowerCase())
-        : contents;
-
-    if (filtered.length === 0) {
-        return (
-            <div className="contentList">
-                <h3 className="emptyContent">No Content Yet!</h3>
-            </div>
-        );
-    }
-
-    const contentNodes = filtered.map(item => {
-        const tagInfo = TAG_OPTIONS.find(
-            t => t.value === item.tag?.toLowerCase()
-        );
-
-        const thumbnailSrc = item.thumbnail
-            ? `data:${item.thumbnailType};base64,${item.thumbnail}`
-            : "/assets/img/defaultThumbnail.png";
-
-        return (
-            <div key={item._id} className="contentCard box">
-                <img
-                    src={thumbnailSrc}
-                    alt="thumbnail"
-                    className="contentThumbnail"
-                    style={{ width: "150px", height: "150px", objectFit: "cover" }}
-                />
-
-                {tagInfo && (
-                    <span className={`tag ${tagInfo.color} mt-2`}>
-                        {tagInfo.label}
-                    </span>
-                )}
-
-                <h3 className="title is-4 mt-3">{item.title}</h3>
-                <p className="subtitle is-6">{item.description}</p>
-
-                <button
-                    className="button is-info mt-2"
-                    onClick={() => {
-                        if (!item.file) return;
-
-                        const link = document.createElement('a');
-                        link.href = `data:${item.fileType};base64,${item.file}`;
-                        link.download = `${item.title}`;
-                        link.click();
-                    }}
-                >
-                    Download File
-                </button>
-            </div>
-        );
-    });
-
-    return <div className="contentList columns is-multiline">{contentNodes}</div>;
-};
-
 const ContentListAll = ({ content: incomingContent, reloadContent }) => {
     const [contents, setContents] = React.useState(incomingContent || []);
 
@@ -271,7 +198,7 @@ const Profile = ({ setPage, reloadContent }) => {
     if (!account) {
         return (
             <a href="/logout" class="button is-success is-fullwidth mt-4">
-                no account found
+                no account found, return to sign in page
             </a>
         )
     }
@@ -300,6 +227,29 @@ const Profile = ({ setPage, reloadContent }) => {
     };
 
     const changePassword = async (e) => {
+        e.preventDefault();
+
+        const response = await fetch('/updatePassword', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ oldPass, newPass }),
+        });
+
+        const result = await response.json();
+
+        if (result.error) {
+            console.error(result.error);
+            return;
+        }
+
+        setOldPass("");
+        setNewPass("");
+
+        setShowPasswordModal(false);
+        console.log("Profile loaded with setPage:", setPage);
+    };
+
+    const premiumToggle = async (e) => {
         e.preventDefault();
 
         const response = await fetch('/updatePassword', {
