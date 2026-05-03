@@ -3,6 +3,7 @@ const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
+//These tags correspond with the tags in the content model but act as an "enum" for the jsx file
 const TAG_OPTIONS = [
     { value: "doordec", label: "Door Dec", color: "is-primary" },
     { value: "bulletin", label: "Bulletin", color: "is-warning" },
@@ -11,7 +12,7 @@ const TAG_OPTIONS = [
     { value: "other", label: "Other", color: "is-dark" },
 ];
 
-
+//Changes the view of the react hook in app.handlebars, called by init
 const App = () => {
     const [page, setPage] = useState("profile");
     const [reloadContent, setReloadContent] = useState(false);
@@ -27,6 +28,7 @@ const App = () => {
     );
 };
 
+//Loads content from the current user's uploads
 const ContentList = ({ reloadContent }) => {
     const [contents, setContents] = React.useState([]);
 
@@ -98,6 +100,7 @@ const ContentList = ({ reloadContent }) => {
     return <div className="contentList columns is-multiline">{contentNodes}</div>;
 };
 
+//Loads all content from the database with the author attached
 const ContentListAll = ({ content: incomingContent, reloadContent }) => {
     const [contents, setContents] = React.useState(incomingContent || []);
 
@@ -173,6 +176,7 @@ const ContentListAll = ({ content: incomingContent, reloadContent }) => {
     return <div className="contentList columns is-multiline">{contentNodes}</div>;
 };
 
+//Profile view allows users to see their content, change their username, password, toggle premium status, and logout
 const Profile = ({ setPage, reloadContent }) => {
     const [account, setAccount] = React.useState(null);
 
