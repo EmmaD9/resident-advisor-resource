@@ -34,6 +34,12 @@ const router = (app) => {
 
     app.get('/getContent', controllers.Content.getContent);
     app.get('/getAllContent', controllers.Content.getAllContent);
+
+    // my 404 handler
+    app.use((req, res) => {
+        res.status(404).render('404');
+    });
+
 };
 
 module.exports = router;

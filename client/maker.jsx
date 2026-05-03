@@ -316,7 +316,7 @@ const Profile = ({ setPage, reloadContent }) => {
                                         <p className="subtitle is-6">Premium Status: {account.isPro ? "Premium" : "Not Premium"}</p>
 
                                         <p>Member Since: {new Date(account.createdDate).toLocaleDateString()}</p>
-                                        <p>Uploads: {account.uploads}</p>
+                                        {/* hidden for now because counter gave me issues <p>Uploads: {account.uploads}</p> */}
 
                                         <button
                                             className="button is-link is-fullwidth mt-3"
