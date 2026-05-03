@@ -41,7 +41,7 @@ const AccountSchema = new mongoose.Schema({
     type: String,
     required: false,
     trim: true,
-    match: /^[A-Za-z0-9_\-.]{1,16}$/,
+    match: /^[A-Za-z0-9_\-.' ]{1,16}$/u,
   },
   uploadCount: {
     type: Number,
@@ -51,7 +51,7 @@ const AccountSchema = new mongoose.Schema({
     type: String,
     required: false,
     trim: true,
-    match: /^[A-Za-z0-9_\-.]{1,16}$/,
+    match: /^[A-Za-z0-9_\-.' ]{1,16}$/u,
   },
   isPro: {
     type: Boolean,
