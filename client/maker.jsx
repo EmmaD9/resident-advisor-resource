@@ -700,7 +700,16 @@ const About = ({ setPage }) => {
                     </ul>
                 </aside>
 
+                <div className="column is-half">
 
+                    <div className="box has-background-light has-text-centered ml-6">
+
+                        This was a project for everyone's favorite class, IGME 420
+
+
+
+                    </div>
+                </div>
             </div>
         </div>
     );
