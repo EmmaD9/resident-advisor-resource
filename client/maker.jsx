@@ -303,7 +303,7 @@ const Profile = ({ setPage, reloadContent }) => {
                         <div className="container">
                             <div className="columns">
                                 <aside className="column is-3">
-                                    <div className="box has-text-centered">
+                                    <div className="box has-text-centered has-background-success-light">
 
 
                                         <figure className="image is-128x128 is-inline-block">
@@ -319,14 +319,14 @@ const Profile = ({ setPage, reloadContent }) => {
                                         {/* hidden for now because counter gave me issues <p>Uploads: {account.uploads}</p> */}
 
                                         <button
-                                            className="button is-link is-fullwidth mt-3"
+                                            className="button is-info is-fullwidth mt-3"
                                             onClick={() => setShowNameModal(true)}
                                         >
                                             Change Display Name
                                         </button>
 
                                         <button
-                                            className="button is-danger is-fullwidth mt-2"
+                                            className="button is-warning is-dark is-fullwidth mt-2"
                                             onClick={() => setShowPasswordModal(true)}
                                         >
                                             Change Password
@@ -349,7 +349,6 @@ const Profile = ({ setPage, reloadContent }) => {
 
 
                                 </aside>
-
 
                                 <main className="column is-9">
                                     <div className="columns is-multiline">
@@ -471,43 +470,47 @@ const Dashboard = ({ setPage, reloadContent }) => {
                         <li><a onClick={() => setPage("about")}>About</a></li>
                     </ul>
                 </aside>
+                <div className="column section">
+                    <h1 className="title">Dashboard</h1>
+                    <div className="tags">
+                        {TAG_OPTIONS.map((t) => (
+                            <span
+                                key={t.value}
+                                className={`tag ${t.color} ${tag === t.value ? "is-selected" : ""}`}
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                    //should trigger the filter
+                                    setTag(t.value);
+                                    console.log("Clicked:", t.value);
+                                }}
+                            >
+                                {t.label}
+                            </span>
+                        ))}
 
-                <div className="tags">
-                    {TAG_OPTIONS.map((t) => (
-                        <span
-                            key={t.value}
-                            className={`tag ${t.color} ${tag === t.value ? "is-selected" : ""}`}
-                            style={{ cursor: "pointer" }}
-                            onClick={() => {
-                                //should trigger the filter
-                                setTag(t.value);
-                                console.log("Clicked:", t.value);
-                            }}
-                        >
-                            {t.label}
-                        </span>
-                    ))}
 
-                    {tag && (
-                        <span
-                            className="tag is-light ml-2"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => setTag("")}
-                        >
-                            Clear Filter
-                        </span>
-                    )}
+                        {tag && (
+                            <span
+                                className="tag is-light ml-2"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => setTag("")}
+                            >
+                                Clear Filter
+                            </span>
+                        )}
+                    </div>
+                    <main className="column is-9">
+                        <div className="columns is-multiline">
+                            <ContentListAll
+                                content={filteredContent}
+                                reloadContent={reloadContent}
+                            />
+                        </div>
+                    </main>
                 </div>
             </div>
 
-            <main className="column is-9">
-                <div className="columns is-multiline">
-                    <ContentListAll
-                        content={filteredContent}
-                        reloadContent={reloadContent}
-                    />
-                </div>
-            </main>
+
         </div>
     );
 };
@@ -555,6 +558,7 @@ const Upload = ({ setPage }) => {
 
                 {/* Main Content */}
                 <main className="column section">
+                    <h1 className="title">Upload</h1>
                     <div className="container">
 
                         <form onSubmit={handleUpload}>
@@ -700,13 +704,14 @@ const About = ({ setPage }) => {
                     </ul>
                 </aside>
                 <main className="column section">
+                    <h1 className="title">About</h1>
                     <div className="column  is-three-fifths is-centered ml-6">
 
                         <div className="box has-background-light has-text-centered">
 
-                            <h1 class="title">About</h1>
+
                             <h2 class="subtitle">A project for everyone's favorite class™: IGME 420</h2>
-                           <br></br>
+                            <br></br>
                             This was a very open ended assignment, with the goal "to create a satisfying and engaging web application that users would actually use in the real world". As a Resident Advisor, I am tasked with creating and designing a number of bulletin boards, events, name tags, and fliers for residents to engage with. As a staff, we often talk about creating a sharing system so that fellow RAs in other buildings on other staffs can access and edit our files that we've put together for bulletin boards. This has been a goal of mine for a while, and this assignment was the perfect opportunity to learn more about fullstack web development.
                             <br></br><br></br>
                             This site allows users to upload PDFs of their designs (currently only one pdf and thumbnail work right now, a future goal is to allow multiple PDFS and a gallery of thumbnails) along with a description and title of the file. This allows other users to access these files for their own use, and for the owner to have all RA designs in one place with explanations on how and what they were used for.
