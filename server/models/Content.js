@@ -49,15 +49,20 @@ ContentSchema.statics.toAPI = (doc) => ({
     title: doc.title,
     description: doc.description,
     tag: doc.tag,
+
     thumbnail: doc.thumbnail?.data
         ? doc.thumbnail.data.toString('base64')
         : null,
+    thumbnailType: doc.thumbnail?.contentType || null,
+
     file: doc.file?.data
         ? doc.file.data.toString('base64')
         : null,
+    fileType: doc.file?.contentType || null,
+
     owner: doc.owner?.displayName || doc.owner?.username || "Unknown",
-    
 });
+
 
 const ContentModel = mongoose.model('Content', ContentSchema);
 module.exports = ContentModel;
