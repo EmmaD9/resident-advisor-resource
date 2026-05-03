@@ -249,28 +249,34 @@ const Profile = ({ setPage, reloadContent }) => {
         console.log("Profile loaded with setPage:", setPage);
     };
 
-    // const premiumToggle = async (e) => {
-    //     e.preventDefault();
+    const premiumToggle = async (e) => {
+        e.preventDefault();
 
-    //     const response = await fetch('/updatePassword', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ oldPass, newPass }),
-    //     });
+        try {
+            const response = await fetch('/togglePremium', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+            });
 
-    //     const result = await response.json();
+            const result = await response.json();
 
-    //     if (result.error) {
-    //         console.error(result.error);
-    //         return;
-    //     }
+            if (result.error) {
+                console.error(result.error);
+                return;
+            }
 
-    //     setOldPass("");
-    //     setNewPass("");
+            // updates local state unsure if necessary
+            setAccount((prev) => ({
+                ...prev,
+                isPro: result.isPro,
+            }));
 
-    //     setShowPasswordModal(false);
-    //     console.log("Profile loaded with setPage:", setPage);
-    // };
+            console.log("Premium status updated:", result.isPro);
+
+        } catch (err) {
+            console.error("Premium toggle failed:", err);
+        }
+    };
 
     return (
         <div>
@@ -278,7 +284,7 @@ const Profile = ({ setPage, reloadContent }) => {
                 <aside className="column is-2 menu section">
                     <figure className="image is-16by9">
                         <img src="/assets/img/ra-resource-logo-solid.png" alt="RA Resource Logo" />
-                        </figure>
+                    </figure>
 
                     <p className="menu-label">Navigation</p>
                     <ul className="menu-list">
@@ -306,6 +312,7 @@ const Profile = ({ setPage, reloadContent }) => {
 
                                         <h2 className="title is-4 mt-3">{account.displayName}</h2>
                                         <p className="subtitle is-6">{account.school}</p>
+                                        <p className="subtitle is-6">Premium Status: {account.isPro ? "Premium" : "Not Premium"}</p>
 
                                         <p>Member Since: {new Date(account.createdDate).toLocaleDateString()}</p>
                                         <p>Uploads: {account.uploads}</p>
@@ -322,6 +329,14 @@ const Profile = ({ setPage, reloadContent }) => {
                                             onClick={() => setShowPasswordModal(true)}
                                         >
                                             Change Password
+                                        </button>
+
+                                        <button
+                                            className="button is-danger is-fullwidth mt-2"
+                                            onClick={premiumToggle}
+
+                                        >
+                                            Toggle Premium
                                         </button>
 
                                         <a href="/logout" className="button is-success is-fullwidth mt-4">
@@ -526,7 +541,7 @@ const Upload = ({ setPage }) => {
                 <aside className="column is-2 menu section">
                     <figure className="image is-16by9">
                         <img src="/assets/img/ra-resource-logo-solid.png" alt="RA Resource Logo" />
-                        </figure>
+                    </figure>
                     <p className="menu-label">Navigation</p>
                     <ul className="menu-list">
                         <li><a onClick={() => setPage("profile")}>Profile</a></li>
@@ -638,7 +653,7 @@ const Upload = ({ setPage }) => {
                                                 onClick={() => {
                                                     setTag(t.value);
                                                     console.log(t.value);
-                                                    
+
                                                 }}
                                             >
                                                 {t.label}
@@ -673,7 +688,7 @@ const About = ({ setPage }) => {
                 <aside className="column is-2 menu section">
                     <figure className="image is-16by9">
                         <img src="/assets/img/ra-resource-logo-solid.png" alt="RA Resource Logo" />
-                        </figure>
+                    </figure>
                     <p className="menu-label">Navigation</p>
                     <ul className="menu-list">
                         <li><a onClick={() => setPage("profile")}>Profile</a></li>
@@ -683,7 +698,7 @@ const About = ({ setPage }) => {
                     </ul>
                 </aside>
 
-                
+
             </div>
         </div>
     );

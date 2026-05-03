@@ -98,33 +98,35 @@ const changeDisplayName = async (req, res) => {
     }
 };
 
-// const togglePremium = async (req, res) => {
-//     if (!req.session.account) {
-//         return res.status(401).json({ error: 'Not logged in' });
-//     }
+const togglePremium = async (req, res) => {
+    if (!req.session.account) {
+        return res.status(401).json({ error: 'Not logged in' });
+    }
 
-//     const account = await Account.findById(req.session.account._id);
-    
-    
-//     if (!account.isPro) {
-//         return res.status(400).json({ error: 'Premium attribute required' });
-//     }
-    
-//     const newStatus = !account.isPro;
+    try {
+        const account = await Account.findById(req.session.account._id);
 
-//     try {
-//         account.isPro = newStatus;
-//         await account.save();
+        if (!account) {
+            return res.status(404).json({ error: 'Account not found' });
+        }
 
-//         req.session.account.isPro = account.isPro = newStatus;
-// ;
+        //change bool
+        account.isPro = !account.isPro;
+        await account.save();
 
-//         return res.json({ message: 'Status updated', displayName: newName });
-//     } catch (err) {
-//         console.error("Display name update failed:", err);
-//         return res.status(500).json({ error: 'Error updating display name' });
-//     }
-// };
+        //update current session
+        req.session.account.isPro = account.isPro;
+
+        return res.json({
+            message: 'Premium status updated',
+            isPro: account.isPro,
+        });
+
+    } catch (err) {
+        console.error("Status update failed:", err);
+        return res.status(500).json({ error: 'Error updating premium status' });
+    }
+};
 
 const changePassword = async (req, res) => {
     if (!req.session.account) {
@@ -185,5 +187,6 @@ module.exports = {
     getAccount,
     changePassword,
     changeDisplayName,
-    appPage
+    appPage,
+    togglePremium
 };

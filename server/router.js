@@ -30,6 +30,7 @@ const router = (app) => {
         ]),
         controllers.Content.makeContent
     );
+    app.post('/togglePremium', controllers.Account.togglePremium);
 
     app.get('/getContent', controllers.Content.getContent);
     app.get('/getAllContent', controllers.Content.getAllContent);
