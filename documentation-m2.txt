@@ -30,7 +30,7 @@ If you were to continue, what would you do to improve your application?
     I actually do plan on continuing, since I'd like this to be a resource for RIT Residence Life. I want to fix the file issues, and maybe create a more dynamic and reactive dashboard that resizes better for mobile screens, can allow a gallery of examples, and more "social" features like viewing other accounts, saving files on the site "for later", etc.
 
 If you went above and beyond, how did you do so?
-    I spent a good chunk of time designing the layout and making sure the UI was clean. I'm especially proud of the download/upload feature. I also did a lot with UI in terms of adding overlays for the profit model explanation (hover!), change password/username, and login/signup pages.
+    I spent a good chunk of time designing the layout and making sure the UI was clean. I'm especially proud of the download/upload feature. I also did a lot with UI in terms of adding overlays for the profit model explanation (hover!), change password/username, and login/signup pages. I've also sent out my site to the RA slack channels and have a few people making accounts! I'm hoping to get more content uploaded from them soon and it will be an interesting challenge to troubleshoot any issues that come from having more traffic.
 
 ● If you used any borrowed code or code fragments, where did you get them from?
 What do the code fragments do? Where are they in your code?
@@ -76,7 +76,64 @@ Return Types: HTML page (app view)
 
 URL: /getAccount
 Supported Methods: suppo
-Middleware: requiresLogin
+Middleware: requinoneresLogin
 Body Params: none
-Description: logs user out by destroying their session
-Return Types: redirects to /
+Description: returns currently logged in user's account data
+Return Types: JSON
+
+URL: /
+Supported Methods: GET
+Middleware: none
+Body Params: none
+Description: If user is logged in redirects to /app, otherwise renders the login page
+Return Types: redirect or HTML page
+
+URL: /updateDisplayName
+Supported Methods: POST
+Middleware: none
+Body Params: displayName
+Description: updates the user's display name
+Return Types: JSON success or error
+
+URL: /updatePassword
+Supported Methods: POST
+Middleware: none
+Body Params: oldPassword, newPassword
+Description: updates the user's password to a new one
+Return Types: JSON success or error
+
+URL: /content
+Supported Methods: POST
+Middleware: requiresLogin, upload.fields([{ name: 'thumbnail' }, { name: 'file' }])  
+Body Params: multipart form-data containing content schema model's params
+Description: creates a new content item with an uploaded thumbnail and file
+Return Types: JSON success or error
+
+URL: /togglePremium
+Supported Methods: POST
+Middleware: none
+Body Params: none
+Description: toggles the user's premium status to be true or false
+Return Types: JSON success or error
+
+URL: /getContent
+Supported Methods: GET
+Middleware: none
+Body Params: none
+Description: retrieves content that is just of the currently logged in user
+Return Types: JSON array of content objects
+
+URL: /getAllContent
+Supported Methods: GET
+Middleware: none
+Body Params: none
+Description: retrieves all content in the system
+Return Types: JSON array of objects
+
+URL: *  (my 404 handler)
+Supported Methods: ALL
+Middleware: none
+Body Params: none
+Description: catches all unmatched routes and renders the 404 page
+Return Types: HTML page with a 404 view
+
