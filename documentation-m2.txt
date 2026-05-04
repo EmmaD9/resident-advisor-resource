@@ -37,3 +37,46 @@ What do the code fragments do? Where are they in your code?
 I used Bulma's stylesheet, Bulma ToolTip (https://bulma-tooltip.netlify.app/), and fontAwesome. I also used Domomaker D/E as the starting point for this project, although per the instructions I've removed all references to it.
 
 Endpoint Documentation
+
+URL: /login
+Supported Methods: GET
+Middleware: requiresSecure, requiresLogout
+Query Params: none
+Body Params: none
+Description: Renders login/signup page if the user isn't logged in and the connection is secure
+Return Types: HTML page login view
+
+URL: /login
+Supported Methods: POST
+Middleware: requiresSecure, requiresLogout
+Body Params: username, password
+Description: Attempts to authenticate the user, and on success redirects to /app
+Return Types: redirect or a JSON error
+
+URL: /signup
+Supported Methods: POST
+Middleware: requiresSecure, requiresLogout
+Body Params: username, password, password2
+Description: creates a new account and logs user in
+Return Types: redirect or a JSON error
+
+URL: /logout
+Supported Methods: GET
+Middleware: requiresLogin
+Body Params: none
+Description: logs user out by destroying their session
+Return Types: redirects to /
+
+URL: /app
+Supported Methods: GET
+Middleware: requiresLogin
+Body Params: none
+Description: renders the main application page for logged in users
+Return Types: HTML page (app view)
+
+URL: /getAccount
+Supported Methods: suppo
+Middleware: requiresLogin
+Body Params: none
+Description: logs user out by destroying their session
+Return Types: redirects to /
