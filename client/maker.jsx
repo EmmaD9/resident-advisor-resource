@@ -436,6 +436,7 @@ const Profile = ({ setPage, reloadContent }) => {
     );
 };
 
+//Displays all content from all users with the option to filter by tag
 const Dashboard = ({ setPage, reloadContent }) => {
     const [tag, setTag] = useState("");
     const [content, setContent] = useState([]);
@@ -519,6 +520,8 @@ const Dashboard = ({ setPage, reloadContent }) => {
     );
 };
 
+//Upload view allows users to upload a file with a title, description, thumbnail, and tag
+//Right now it only accepts one file and one thumbnail, but a future goal is to allow multiple files and a gallery of thumbnails
 const Upload = ({ setPage }) => {
     const [error, setError] = React.useState(null);
     const [tag, setTag] = useState("");
@@ -690,7 +693,7 @@ const Upload = ({ setPage }) => {
     );
 };
 
-
+//Displays information about the project
 const About = ({ setPage }) => {
     return (
         <div>

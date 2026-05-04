@@ -1,34 +1,39 @@
 What is the purpose of your application? What does it do?
-● How are you using React?
+My application is a site for RAs to upload their design content they've made, whether it's door tags, bulletin board files, or events. It's something I've been looking for to share my designs with other RAs and to borrow from theirs as well.
+
+How are you using React?
     I am using React to manage the frontend view displays of my site. In the login view, it manages swapping between signup/login, and it calls the appropriate function in my Account controller to either make a new account or to authenticate user credentials. In the application view it manages the different view displays (profile, dashboard, upload, and about). From there it interacts appropriately with the Account and Content models, where new content is created, sorted via tags, and is given a reference to the owner of the content. 
     ○ What components do you have?
         1. On every "view" I have a side navigation bar that uses React states to determine the view (profile, dashboard, upload, about)
         2. ContentList and ContentListAll access lists of the uploaded content from Mongo and then return HTML with that information properly formatted
-        3. The profile section uses React states to show modals of 
-● What data are you storing in MongoDB?
-● What is your profit model?
-● What went right in the development of this project?
-● What went wrong in the development of this project?
-● What did you learn while developing this project?
-● If you were to continue, what would you do to improve your application?
-● If you went above and beyond, how did you do so?
+        3. The profile section uses React states to display content the user has uploaded, as well as hide/show modals for the change password/username functions. It manages the display of that UI, as well as sending the requests to change the account information.
+        4. The dashboard section similarly displays all content from within the database, as well as allows the user to filter through with tags. The tag state updatese when users click on tags in the UI.
+        5. The upload section also uses react states to show the UI for the user to upload their content, and sends the request to upload the content
+        6. About component simply displays the about view.
+
+What data are you storing in MongoDB?
+    Mongo stores the Account and Content information. Accounts have a username, password, display name, created date, school, and an upload count (currently it does not work). Content has a title, description, owner id, thumbnail png, file, tag, and a created date.
+
+What is your profit model?
+    My profit model would allow users to pay and make their content "premium", which in turn gives them access to other premium users' content.
+
+What went right in the development of this project?
+    I was able to get an extension since I was behind on my work, and that let me make something that I'm really proud of. Once I'd finished fixing the login page, using react alongside the backend files finally clicked in my brain. I have a much better understanding now of the relationships between models and controllers, as well as how the router manages requests between the frontend and backend of the site. Once that clicked coming up with new features and how to implement them got a lot easier and I had fun with it.
+
+What went wrong in the development of this project?
+    My time management was far from ideal, and even with the extension I had to go into crunch mode. I also tend to overscope my projects, and with this one I kept coming up with new features/ideas that distracted me from the assignment requirements (I spent so so long figuring out a tag system and realized last minute I needed a profit model). I think the profit model could be a bit more fleshed out, with more options/cut off to premium content which is something to consider if I take this project to that level. Another big thing was that the files I uploaded can only be so large. In the future I may look at different services or try and optimize how I store files so that more can be added and their size doesn't matter.
+
+What did you learn while developing this project?
+    I learned a lot about the relationship between front and backend development, specifically with how router requests are used between the react files and the controller/models. There were a lot of things I understood in theory, but didn't really get how they worked in practice until I was playing around with them for a while. I understand now how requests work and how the data that is returned is managed and how it can be accessed.
+
+If you were to continue, what would you do to improve your application?
+    I actually do plan on continuing, since I'd like this to be a resource for RIT Residence Life. I want to fix the file issues, and maybe create a more dynamic and reactive dashboard that resizes better for mobile screens, can allow a gallery of examples, and more "social" features like viewing other accounts, saving files on the site "for later", etc.
+
+If you went above and beyond, how did you do so?
+    I spent a good chunk of time designing the layout and making sure the UI was clean. I'm especially proud of the download/upload feature. I also did a lot with UI in terms of adding overlays for the profit model explanation (hover!), change password/username, and login/signup pages.
+
 ● If you used any borrowed code or code fragments, where did you get them from?
 What do the code fragments do? Where are they in your code?
-
+I used Bulma's stylesheet, Bulma ToolTip (https://bulma-tooltip.netlify.app/), and fontAwesome. I also used Domomaker D/E as the starting point for this project, although per the instructions I've removed all references to it.
 
 Endpoint Documentation
-You must document each data endpoint (each one listed in your router.js). This
-documentation should be done in your written documentation after you answer the
-above questions. Describe each endpoint with the following information:
-● The URL of the endpoint
-The supported methods of the endpoint (GET, POST, etc)
-● What middleware the endpoint uses.
-● Any query/body parameters that the endpoint accepts/requires.
-● A brief description of what the endpoint does and returns.
-Example:
-URL: /getDogByName
-Supported Methods: GET, HEAD
-Middleware: Requires Secure, Requires Login
-Query Params: dogName (the name of the dog being searched for)
-Description: Retrieves information about a specific dog.
-Return Type(s): JSON
